@@ -93,7 +93,7 @@ export const CartProvider = ({ children }) => {
 
   const totalItems = state.items.reduce((sum, i) => sum + i.quantity, 0);
   const subtotal = state.items.reduce(
-    (sum, i) => sum + i.product.price * i.quantity, 0
+    (sum, i) => sum + (i.product.salePrice || i.product.price) * i.quantity, 0
   );
 
   return (

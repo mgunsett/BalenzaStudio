@@ -1,6 +1,6 @@
 import {
   collection, doc, getDocs, getDoc, addDoc, updateDoc,
-  deleteDoc, query, where, orderBy, limit, serverTimestamp,
+  query, where, orderBy, limit, serverTimestamp,
 } from "firebase/firestore";
 import { db } from "./config";
 
@@ -8,7 +8,11 @@ const PRODUCTS_COL = "products";
 
 export const getProducts = async (filters = {}) => {
   let q = collection(db, PRODUCTS_COL);
-  const constraints = [where("active", "==", true)];
+  const constraints = [];
+
+  if (filters.includeInactive !== true) {
+    constraints.push(where("active", "==", true));
+  }
 
   if (filters.category) constraints.push(where("category", "==", filters.category));
   if (filters.featured !== undefined) constraints.push(where("featured", "==", filters.featured));

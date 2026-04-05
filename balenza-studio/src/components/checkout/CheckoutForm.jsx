@@ -49,7 +49,7 @@ const CheckoutForm = ({ onSubmit, defaultValues }) => {
   } = useForm({ resolver: zodResolver(schema), defaultValues });
 
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)} w="100%">
+    <Box as="form" id="checkout-form" onSubmit={handleSubmit(onSubmit)} w="100%">
       <VStack align="flex-start" spacing={6}>
 
         <Box>

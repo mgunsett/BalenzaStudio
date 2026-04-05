@@ -2,8 +2,19 @@ import { useRef, useEffect } from "react";
 import { Box, VStack, HStack, Text, SimpleGrid, Image, Link, Icon, Flex } from "@chakra-ui/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Instagram, Facebook } from "lucide-react";
 import { SOCIAL_LINKS } from "../../utils/constants";
+
+const InstagramIcon = ({ size = 18, strokeWidth = 1.5, ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.51"/>
+  </svg>
+);
+
+const FacebookIcon = ({ size = 18, strokeWidth = 1.5, ...props }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+  </svg>
+);
 
 // Mosaico de fotos IG (placeholders)
 const IG_POSTS = Array.from({ length: 6 }, (_, i) => ({
@@ -68,7 +79,7 @@ const SocialSection = () => {
                 transition="all 0.2s"
                 color="brand.brown"
               >
-                <Instagram size={18} strokeWidth={1.5} />
+                <InstagramIcon size={18} strokeWidth={1.5} />
               </Flex>
             </Link>
             <Link href={SOCIAL_LINKS.facebook} isExternal>
@@ -82,7 +93,7 @@ const SocialSection = () => {
                 transition="all 0.2s"
                 color="brand.brown"
               >
-                <Facebook size={18} strokeWidth={1.5} />
+                <FacebookIcon size={18} strokeWidth={1.5} />
               </Flex>
             </Link>
           </HStack>

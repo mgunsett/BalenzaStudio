@@ -22,7 +22,8 @@ export const AuthProvider = ({ children }) => {
     return unsub;
   }, []);
 
-  const isAdmin = profile?.role === "admin";
+  const ADMIN_ROLES = ["admin", "Propietario"];
+  const isAdmin = ADMIN_ROLES.includes(profile?.role);
   const isAuthenticated = !!user;
 
   return (

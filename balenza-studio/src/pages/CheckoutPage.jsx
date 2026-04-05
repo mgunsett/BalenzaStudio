@@ -10,13 +10,10 @@ import { useAuth } from "../context/AuthContext";
 import { formatPrice } from "../utils/formatters";
 import { TRANSFER_DISCOUNT } from "../utils/constants";
 import { createOrder } from "../services/firebase/orders";
-import CheckoutForm, { schema } from "../components/checkout/CheckoutForm";
+import CheckoutForm from "../components/checkout/CheckoutForm";
 import MercadoPagoButton from "../components/checkout/MercadoPagoButton";
 import WhatsAppTransfer from "../components/checkout/WhatsAppTransfer";
 import AuthModal from "../components/auth/AuthModal";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import CartItem from "../components/cart/CartItem";
 
 const CheckoutPage = () => {
   const { items, subtotal, clearCart } = useCart();
@@ -29,19 +26,6 @@ const CheckoutPage = () => {
   const [creating, setCreating]     = useState(false);
   const [formData, setFormData]     = useState(null);
   const [orderReady, setOrderReady] = useState(false);
-
-  const {
-    register, handleSubmit, formState: { errors }, watch,
-  } = useForm({
-    resolver: zodResolver(schema),
-    defaultValues: profile ? {
-      name: profile.name,
-      lastName: profile.lastName,
-      dni: profile.dni,
-      email: user?.email,
-      phone: profile.phone,
-    } : {},
-  });
 
   useEffect(() => {
     if (items.length === 0) navigate("/carrito");
@@ -152,6 +136,8 @@ const CheckoutPage = () => {
               {/* Botón confirmar datos */}
               {!orderReady && (
                 <Button
+                  type="submit"
+                  form="checkout-form"
                   variant="primary"
                   size="lg"
                   py={7}
@@ -159,7 +145,6 @@ const CheckoutPage = () => {
                   letterSpacing="0.2em"
                   isLoading={creating}
                   loadingText="Procesando..."
-                  onClick={handleSubmit(onFormSubmit)}
                   w="100%"
                 >
                   Confirmar datos y elegir pago

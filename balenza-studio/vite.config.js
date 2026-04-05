@@ -12,12 +12,16 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor:      ["react", "react-dom", "react-router-dom"],
-          chakra:      ["@chakra-ui/react", "@emotion/react", "@emotion/styled"],
-          gsap:        ["gsap"],
-          firebase:    ["firebase/app", "firebase/firestore", "firebase/auth", "firebase/storage"],
-          mercadopago: ["@mercadopago/sdk-react"],
+        manualChunks(id) {
+          if (id.includes("node_modules/react-dom"))      return "vendor";
+          if (id.includes("node_modules/react/"))         return "vendor";
+          if (id.includes("node_modules/react-router"))   return "vendor";
+          if (id.includes("node_modules/@chakra-ui"))     return "chakra";
+          if (id.includes("node_modules/@emotion"))       return "chakra";
+          if (id.includes("node_modules/framer-motion"))  return "chakra";
+          if (id.includes("node_modules/gsap"))           return "gsap";
+          if (id.includes("node_modules/firebase"))       return "firebase";
+          if (id.includes("node_modules/@mercadopago"))   return "mercadopago";
         },
       },
     },
