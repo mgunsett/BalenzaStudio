@@ -3,8 +3,8 @@ import { Box, Flex, Text, Button, VStack, HStack, IconButton } from "@chakra-ui/
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { getBannerImages } from "../../services/firebase/design";
 
-// Slides de ejemplo — reemplazar con imágenes reales desde Firebase Storage
 const SLIDES = [
   {
     id: 1,
@@ -14,7 +14,6 @@ const SLIDES = [
     subtitle: "Prendas que te definen",
     cta: "Explorar colección",
     ctaLink: "/categoria/remeras",
-    image: null, // reemplazar con URL de Firebase Storage
     accent: "#A0785A",
   },
   {
@@ -25,7 +24,6 @@ const SLIDES = [
     subtitle: "Para cada momento del día",
     cta: "Ver pantalones",
     ctaLink: "/categoria/pantalones",
-    image: null,
     accent: "#6B8A9E",
   },
   {
@@ -36,12 +34,12 @@ const SLIDES = [
     subtitle: "Diseño y funcionalidad en equilibrio",
     cta: "Ver camperas",
     ctaLink: "/categoria/camperas",
-    image: null,
     accent: "#7A6590",
   },
 ];
 
 const HeroCarousel = () => {
+  const [bannerImages, setBannerImages] = useState([]);
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -54,6 +52,13 @@ const HeroCarousel = () => {
   const ctaRef       = useRef(null);
   const dotsRef      = useRef([]);
   const autoRef      = useRef(null);
+
+  // Cargar imágenes de banner desde Firestore
+  useEffect(() => {
+    getBannerImages()
+      .then((imgs) => setBannerImages(imgs))
+      .catch(() => setBannerImages([]));
+  }, []);
 
   // Animación de entrada inicial
   useEffect(() => {
@@ -163,11 +168,11 @@ const HeroCarousel = () => {
           transition="opacity 0.1s"
           zIndex={i === current ? 1 : 0}
         >
-          {/* Imagen de fondo si existe */}
-          {s.image && (
+          {/* Imagen de fondo desde Firebase */}
+          {bannerImages[i] && (
             <Box
               as="img"
-              src={s.image}
+              src={bannerImages[i]}
               alt=""
               position="absolute"
               inset={0}

@@ -1,37 +1,20 @@
 import { useRef, useEffect, useState } from "react";
 import {
   Box, Grid, GridItem, VStack, HStack, Text, Button, Badge, Flex, Image,
+  Spinner,
 } from "@chakra-ui/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useCart } from "../../context/CartContext";
+import { useProducts } from "../../hooks/useProducts";
 import { formatPrice } from "../../utils/formatters";
-import { SIZES } from "../../utils/constants";
 import SizeSelector from "../products/SizeSelector";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Imágenes placeholder — reemplazar con URLs de Firebase Storage
-const PLACEHOLDER_IMAGES = [
-  "https://placehold.co/600x750/EDE0D4/7A6555?text=Look+1",
-  "https://placehold.co/400x500/E8D5C4/7A6555?text=Look+2",
-  "https://placehold.co/400x500/D4C4B5/7A6555?text=Look+3",
-  "https://placehold.co/400x500/DDD5C4/7A6555?text=Look+4",
-];
-
-const FEATURED_PRODUCT = {
-  id: "featured-001",
-  name: "Remera Lino Oversized",
-  category: "remeras",
-  price: 15990,
-  salePrice: null,
-  description: "Confeccionada en lino 100% natural, esta remera oversized combina comodidad y elegancia en una pieza atemporal. Perfecta para el día a día con un toque sofisticado.",
-  images: PLACEHOLDER_IMAGES,
-  sizes: { XS: 5, S: 8, M: 6, L: 3, XL: 2 },
-  featured: true,
-};
-
-const FeaturedProduct = ({ product = FEATURED_PRODUCT }) => {
+const FeaturedProduct = () => {
+  const { products, loading } = useProducts({ featured: true, limit: 1 });
+  const product = products[0];
   const sectionRef = useRef(null);
   const imagesRef  = useRef(null);
   const infoRef    = useRef(null);
@@ -39,6 +22,7 @@ const FeaturedProduct = ({ product = FEATURED_PRODUCT }) => {
   const { addItem } = useCart();
 
   useEffect(() => {
+    if (!product) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(
         imagesRef.current,
@@ -66,12 +50,24 @@ const FeaturedProduct = ({ product = FEATURED_PRODUCT }) => {
       );
     }, sectionRef);
     return () => ctx.revert();
-  }, []);
+  }, [product]);
 
   const handleAdd = () => {
     if (!selectedSize) return;
     addItem(product, selectedSize);
   };
+
+  if (loading) {
+    return (
+      <Flex py={{ base: 16, md: 24 }} justify="center" align="center" bg="brand.nude">
+        <Spinner size="xl" color="brand.dark" />
+      </Flex>
+    );
+  }
+
+  if (!product) return null;
+
+  const images = product.images || [];
 
   return (
     <Box ref={sectionRef} py={{ base: 16, md: 24 }} px={{ base: 4, md: 8, lg: 16 }} bg="brand.nude" overflow="hidden">
@@ -87,7 +83,7 @@ const FeaturedProduct = ({ product = FEATURED_PRODUCT }) => {
           <Grid templateColumns="2fr 1fr" templateRows="auto auto" gap={3} h={{ base: "500px", md: "620px" }}>
             <GridItem rowSpan={2}>
               <Image
-                src={product.images[0]}
+                src={images[0]}
                 alt={product.name}
                 w="100%" h="100%"
                 objectFit="cover"
@@ -96,7 +92,7 @@ const FeaturedProduct = ({ product = FEATURED_PRODUCT }) => {
             </GridItem>
             <GridItem>
               <Image
-                src={product.images[1]}
+                src={images[1]}
                 alt={product.name}
                 w="100%" h="100%"
                 objectFit="cover"
@@ -105,7 +101,7 @@ const FeaturedProduct = ({ product = FEATURED_PRODUCT }) => {
             </GridItem>
             <GridItem>
               <Image
-                src={product.images[2]}
+                src={images[2]}
                 alt={product.name}
                 w="100%" h="100%"
                 objectFit="cover"
