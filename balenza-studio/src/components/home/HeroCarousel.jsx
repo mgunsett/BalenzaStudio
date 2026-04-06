@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getBannerImages } from "../../services/firebase/design";
+import banner_1 from "../../assets/banner_1.svg";
+import banner_2 from "../../assets/banner_2.svg";
+import banner_3 from "../../assets/banner_3.svg";
 
 const SLIDES = [
   {
@@ -54,11 +57,11 @@ const HeroCarousel = () => {
   const autoRef      = useRef(null);
 
   // Cargar imágenes de banner desde Firestore
-  useEffect(() => {
+  /*useEffect(() => {
     getBannerImages()
       .then((imgs) => setBannerImages(imgs))
       .catch(() => setBannerImages([]));
-  }, []);
+  }, []);*/
 
   // Animación de entrada inicial
   useEffect(() => {
@@ -169,10 +172,10 @@ const HeroCarousel = () => {
           zIndex={i === current ? 1 : 0}
         >
           {/* Imagen de fondo desde Firebase */}
-          {bannerImages[i] && (
+          
             <Box
               as="img"
-              src={bannerImages[i]}
+              src={i === 0 ? banner_1 : i === 1 ? banner_2 : banner_3}
               alt=""
               position="absolute"
               inset={0}
@@ -182,7 +185,7 @@ const HeroCarousel = () => {
               objectPosition="center"
               opacity={0.7}
             />
-          )}
+          
 
           {/* Elementos decorativos */}
           <Box
