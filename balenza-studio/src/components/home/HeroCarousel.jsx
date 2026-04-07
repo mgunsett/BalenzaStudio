@@ -3,7 +3,6 @@ import { Box, Flex, Text, Button, VStack, HStack, IconButton } from "@chakra-ui/
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { getBannerImages } from "../../services/firebase/design";
 import banner_1 from "../../assets/images/hero/banner_1.svg";
 import banner_2 from "../../assets/images/hero/banner_2.svg";
 import banner_3 from "../../assets/images/hero/banner_3.svg";
@@ -42,7 +41,6 @@ const SLIDES = [
 ];
 
 const HeroCarousel = () => {
-  const [bannerImages, setBannerImages] = useState([]);
   const navigate = useNavigate();
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -55,13 +53,6 @@ const HeroCarousel = () => {
   const ctaRef       = useRef(null);
   const dotsRef      = useRef([]);
   const autoRef      = useRef(null);
-
-  // Cargar imágenes de banner desde Firestore
-  /*useEffect(() => {
-    getBannerImages()
-      .then((imgs) => setBannerImages(imgs))
-      .catch(() => setBannerImages([]));
-  }, []);*/
 
   // Animación de entrada inicial
   useEffect(() => {
@@ -243,11 +234,11 @@ const HeroCarousel = () => {
             ref={titleRef}
             fontFamily="heading"
             fontWeight={300}
-            fontSize={{ base: "5xl", md: "6xl", lg: "7xl" }}
+            fontSize={{ base: "6xl", md: "6xl", lg: "7xl" }}
             lineHeight={1.05}
             letterSpacing="0.04em"
             color="brand.dark"
-            textAlign={{ base: "center", md: "left" }}
+            textAlign='left'
             whiteSpace="pre-line"
           >
             {slide.title}
@@ -291,15 +282,16 @@ const HeroCarousel = () => {
       {/* Flechas de navegación */}
       <IconButton
         icon={<ChevronLeft size={20} strokeWidth={1.5} />}
+        //display={{base:'none', md: 'flex' }}
         variant="ghost"
         position="absolute"
-        left={4}
-        top="50%"
+        left={{ base: '2px', md: 4 }}
+        top={{ base: "60%", md: "50%" }}
         transform="translateY(-50%)"
         zIndex={20}
         w="44px" h="44px"
         borderRadius="full"
-        bg="rgba(253,250,247,0.6)"
+        bg={{ base: "transparent", md: "rgba(253,250,247,0.6)" }}
         backdropFilter="blur(8px)"
         border="0.5px solid rgba(160,120,90,0.2)"
         color="brand.dark"
@@ -311,13 +303,13 @@ const HeroCarousel = () => {
         icon={<ChevronRight size={20} strokeWidth={1.5} />}
         variant="ghost"
         position="absolute"
-        right={4}
-        top="50%"
+        right={{ base: '2px', md: 4 }}
+        top={{ base: "60%", md: "50%" }}
         transform="translateY(-50%)"
         zIndex={20}
         w="44px" h="44px"
         borderRadius="full"
-        bg="rgba(253,250,247,0.6)"
+        bg={{ base: "transparent", md: "rgba(253,250,247,0.6)" }}
         backdropFilter="blur(8px)"
         border="0.5px solid rgba(160,120,90,0.2)"
         color="brand.dark"
