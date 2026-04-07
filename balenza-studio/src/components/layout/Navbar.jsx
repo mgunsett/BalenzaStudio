@@ -2,9 +2,12 @@ import { useRef, useEffect } from "react";
 import {
   Box, Flex, HStack, Text, IconButton, Badge, Button,
   Menu, MenuButton, MenuList, MenuItem, useDisclosure,
+  Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton,
+  VStack, Divider, Accordion, AccordionItem, AccordionButton,
+  AccordionPanel, AccordionIcon,
 } from "@chakra-ui/react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { ShoppingBag, User, ChevronDown } from "lucide-react";
+import { ShoppingBag, User, ChevronDown, Menu as MenuIcon } from "lucide-react";
 import { gsap } from "gsap";
 import { useScrollPosition } from "../../hooks/useScrollPosition";
 import { useCart } from "../../context/CartContext";
@@ -22,6 +25,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const authModal = useDisclosure();
+  const mobileMenu = useDisclosure();
 
   // Animación de entrada GSAP
   useEffect(() => {
@@ -179,9 +183,207 @@ const Navbar = () => {
                 Admin
               </Button>
             )}
+
+            {/* Hamburguesa — mobile */}
+            <IconButton
+              icon={<MenuIcon size={24} strokeWidth={1.5} />}
+              variant="ghost"
+              color="brand.dark"
+              aria-label="Menú"
+              display={{ base: "flex", lg: "none" }}
+              onClick={mobileMenu.onOpen}
+              _hover={{ bg: "brand.beige" }}
+            />
           </HStack>
         </Flex>
       </Box>
+
+      {/* Drawer mobile */}
+      <Drawer
+        isOpen={mobileMenu.isOpen}
+        onClose={mobileMenu.onClose}
+        placement="right"
+        size="xs"
+      >
+        <DrawerOverlay bg="blackAlpha.400" backdropFilter="blur(4px)" />
+        <DrawerContent bg="brand.white" pt={4}>
+          <DrawerCloseButton
+            color="brand.dark"
+            top={5}
+            right={4}
+            _hover={{ bg: "brand.beige" }}
+          />
+
+          {/* Logo en drawer */}
+          <Box px={6} pt={2} pb={4}>
+            <Link to="/" onClick={mobileMenu.onClose}><Logo /></Link>
+          </Box>
+
+          <Divider borderColor="brand.beige" />
+
+          <DrawerBody px={6} pt={6}>
+            <VStack align="stretch" spacing={0}>
+
+              {/* Productos accordion */}
+              <Accordion allowToggle>
+                <AccordionItem border="none">
+                  <AccordionButton
+                    px={0} py={3}
+                    _hover={{ bg: "transparent" }}
+                  >
+                    <Text
+                      flex="1" textAlign="left"
+                      fontSize="xs" letterSpacing="wider"
+                      textTransform="uppercase" color="brand.muted"
+                      fontWeight={400}
+                    >
+                      Productos
+                    </Text>
+                    <AccordionIcon color="brand.muted" />
+                  </AccordionButton>
+                  <AccordionPanel pb={2} px={0}>
+                    <VStack align="stretch" spacing={0} pl={3}>
+                      {CATEGORIES.map((cat) => (
+                        <Button
+                          key={cat.slug}
+                          variant="ghost"
+                          justifyContent="flex-start"
+                          fontSize="sm"
+                          fontWeight={400}
+                          color="brand.muted"
+                          px={0} py={2}
+                          h="auto"
+                          _hover={{ color: "brand.dark", bg: "transparent" }}
+                          onClick={() => {
+                            navigate(`/categoria/${cat.slug}`);
+                            mobileMenu.onClose();
+                          }}
+                        >
+                          {cat.emoji} {cat.label}
+                        </Button>
+                      ))}
+                    </VStack>
+                  </AccordionPanel>
+                </AccordionItem>
+              </Accordion>
+
+              <Divider borderColor="brand.beige" />
+
+              <Button
+                variant="ghost"
+                justifyContent="flex-start"
+                fontSize="xs"
+                letterSpacing="wider"
+                textTransform="uppercase"
+                color="brand.muted"
+                fontWeight={400}
+                px={0} py={3}
+                h="auto"
+                _hover={{ color: "brand.dark", bg: "transparent" }}
+                onClick={() => {
+                  scrollToSection("about");
+                  mobileMenu.onClose();
+                }}
+              >
+                Nosotros
+              </Button>
+
+              <Divider borderColor="brand.beige" />
+
+              <Button
+                variant="ghost"
+                justifyContent="flex-start"
+                fontSize="xs"
+                letterSpacing="wider"
+                textTransform="uppercase"
+                color="brand.muted"
+                fontWeight={400}
+                px={0} py={3}
+                h="auto"
+                _hover={{ color: "brand.dark", bg: "transparent" }}
+                onClick={() => {
+                  navigate("/como-comprar");
+                  mobileMenu.onClose();
+                }}
+              >
+                ¿Cómo comprar?
+              </Button>
+
+              <Divider borderColor="brand.beige" />
+
+              <Button
+                variant="ghost"
+                justifyContent="flex-start"
+                fontSize="xs"
+                letterSpacing="wider"
+                textTransform="uppercase"
+                color="brand.muted"
+                fontWeight={400}
+                px={0} py={3}
+                h="auto"
+                _hover={{ color: "brand.dark", bg: "transparent" }}
+                onClick={() => {
+                  scrollToSection("contacto");
+                  mobileMenu.onClose();
+                }}
+              >
+                Contacto
+              </Button>
+
+              <Divider borderColor="brand.beige" />
+
+              {/* Cuenta / Login */}
+              <Button
+                variant="ghost"
+                justifyContent="flex-start"
+                fontSize="xs"
+                letterSpacing="wider"
+                textTransform="uppercase"
+                color="brand.muted"
+                fontWeight={400}
+                px={0} py={3}
+                h="auto"
+                leftIcon={<User size={16} strokeWidth={1.5} />}
+                _hover={{ color: "brand.dark", bg: "transparent" }}
+                onClick={() => {
+                  if (isAuthenticated) {
+                    navigate("/mi-cuenta");
+                  } else {
+                    authModal.onOpen();
+                  }
+                  mobileMenu.onClose();
+                }}
+              >
+                {isAuthenticated ? "Mi cuenta" : "Iniciar sesión"}
+              </Button>
+
+              {isAdmin && (
+                <>
+                  <Divider borderColor="brand.beige" />
+                  <Button
+                    variant="ghost"
+                    justifyContent="flex-start"
+                    fontSize="xs"
+                    letterSpacing="wider"
+                    textTransform="uppercase"
+                    color="brand.brown"
+                    fontWeight={400}
+                    px={0} py={3}
+                    h="auto"
+                    _hover={{ color: "brand.dark", bg: "transparent" }}
+                    onClick={() => {
+                      navigate("/admin");
+                      mobileMenu.onClose();
+                    }}
+                  >
+                    Panel Admin
+                  </Button>
+                </>
+              )}
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
 
       <AuthModal isOpen={authModal.isOpen} onClose={authModal.onClose} />
     </>

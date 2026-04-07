@@ -5,11 +5,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CATEGORIES } from "../../utils/constants";
 import { ArrowRight } from "lucide-react";
+import section_camperas from "../../assets/images/categories/section_camperas.svg";
+import section_pantalones from "../../assets/images/categories/section_pantalones.svg";
+import section_remeras from "../../assets/images/categories/section_remeras.svg";
 
 const CAT_IMAGES = {
-  remeras:    "https://placehold.co/500x640/EDE0D4/7A6555?text=Remeras",
-  pantalones: "https://placehold.co/500x640/D4DDE8/7A6555?text=Pantalones",
-  camperas:   "https://placehold.co/500x640/DDD5E8/7A6555?text=Camperas",
+  remeras:    section_remeras,
+  pantalones: section_pantalones,
+  camperas:   section_camperas,
 };
 
 const CategoryBanner = () => {
@@ -67,10 +70,36 @@ const CategoryBanner = () => {
                 alt={cat.label}
                 w="100%" h="100%"
                 objectFit="cover"
+                objectPosition="center"
+                opacity={0.7}
                 transform="scale(1)"
-                _groupHover={{ transform: "scale(1.05)" }}
-                transition="transform 0.6s ease"
+                _groupHover={{ transform: "scale(1.05)", opacity: 0.9 }}
+                transition="transform 0.6s ease, opacity 0.6s ease "
               />
+              {/* Elementos decorativos */}
+              <Box
+                position="absolute"
+                right="-45%"
+                bottom="-25%"
+                w="25vw"
+                h="25vw"
+                maxW="500px"
+                maxH="500px"
+                borderRadius="full"
+                border="0.5px solid rgba(255,255,255,0.3)"
+              />
+              <Box
+                position="absolute"
+                left="-45%"
+                top="-8%"
+                w="20vw"
+                h="20vw"
+                maxW="350px"
+                maxH="350px"
+                borderRadius="full"
+                border="0.5px solid rgba(255,255,255,0.2)"
+              />
+
               {/* Overlay */}
               <Box
                 position="absolute"

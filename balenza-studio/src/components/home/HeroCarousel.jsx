@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getBannerImages } from "../../services/firebase/design";
-import banner_1 from "../../assets/banner_1.svg";
-import banner_2 from "../../assets/banner_2.svg";
-import banner_3 from "../../assets/banner_3.svg";
+import banner_1 from "../../assets/images/hero/banner_1.svg";
+import banner_2 from "../../assets/images/hero/banner_2.svg";
+import banner_3 from "../../assets/images/hero/banner_3.svg";
 
 const SLIDES = [
   {
@@ -170,9 +170,7 @@ const HeroCarousel = () => {
           opacity={i === current ? 1 : 0}
           transition="opacity 0.1s"
           zIndex={i === current ? 1 : 0}
-        >
-          {/* Imagen de fondo desde Firebase */}
-          
+        >        
             <Box
               as="img"
               src={i === 0 ? banner_1 : i === 1 ? banner_2 : banner_3}
@@ -352,32 +350,6 @@ const HeroCarousel = () => {
           />
         ))}
       </HStack>
-
-      {/* Scroll indicator */}
-      <VStack
-        position="absolute"
-        bottom={8}
-        right={8}
-        zIndex={20}
-        spacing={1}
-        opacity={0.4}
-      >
-        <Box
-          w="1px"
-          h="40px"
-          bg="brand.dark"
-          sx={{
-            animation: "scrollPulse 2s ease-in-out infinite",
-            "@keyframes scrollPulse": {
-              "0%, 100%": { scaleY: 1, transformOrigin: "top" },
-              "50%": { scaleY: 0.5, transformOrigin: "top" },
-            },
-          }}
-        />
-        <Text fontFamily="body" fontSize="2xs" letterSpacing="0.2em" textTransform="uppercase" color="brand.muted">
-          scroll
-        </Text>
-      </VStack>
     </Box>
   );
 };

@@ -132,16 +132,16 @@ const AboutSection = () => {
             />
             {/* Caja decorativa superpuesta */}
             <Box
-              position="absolute"
-              bottom={-6}
-              left={-6}
-              w="120px"
-              h="120px"
-              border="1px solid"
-              borderColor="brand.sand"
-              borderRadius="lg"
-              zIndex={-1}
-            />
+                position="absolute"
+                left="-25%"
+                bottom="-8%"
+                w="20vw"
+                h="20vw"
+                maxW="350px"
+                maxH="350px"
+                borderRadius="full"
+                border="0.5px solid rgba(255, 255, 255, 0.5)"
+              />
           </Box>
         </GridItem>
       </Grid>
