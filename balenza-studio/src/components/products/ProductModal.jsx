@@ -56,17 +56,19 @@ const ProductModal = ({ product, isOpen, onClose }) => {
       <ModalOverlay />
       <ModalContent bg="brand.cream" borderRadius={{ base: 0, md: "xl" }} maxH="95vh">
         <ModalCloseButton
-          top={4} right={4}
+          top={4} right={{ base: 2, md: 4 }}
           borderRadius="full"
           bg="brand.beige"
           _hover={{ bg: "brand.sand" }}
           color="brand.muted"
+          zIndex={9}
         />
 
         <ModalBody p={{ base: 4, md: 8 }} ref={contentRef}>
           <Grid
             templateColumns={{ base: "1fr", md: "1fr 1fr" }}
-            gap={{ base: 8, md: 12 }}
+            gap={{ base: 6, md: 12 }}
+            mt={{base: 4, md: 0}}
           >
             {/* Galería */}
             <GridItem>
@@ -146,7 +148,7 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                       <Tab
                         key={tab}
                         fontFamily="body"
-                        fontSize="xs"
+                        fontSize={{ base: "2xs", md: "xs" }}
                         letterSpacing="0.15em"
                         textTransform="uppercase"
                         color="brand.muted"
@@ -163,7 +165,7 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                   </TabList>
                   <TabPanels pt={4}>
                     <TabPanel p={0}>
-                      <Text fontFamily="body" fontSize="sm" color="brand.muted" lineHeight={1.8}>
+                      <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted" lineHeight={1.8}>
                         {product.description || "Sin descripción disponible."}
                       </Text>
                     </TabPanel>
@@ -171,13 +173,13 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                       <VStack align="flex-start" spacing={3}>
                         <HStack spacing={3}>
                           <CreditCard size={16} color="var(--chakra-colors-brand-brown)" strokeWidth={1.5} />
-                          <Text fontFamily="body" fontSize="sm" color="brand.muted">
-                            MercadoPago — todas las tarjetas, hasta 12 cuotas
+                          <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted">
+                            MercadoPago — todas las tarjetas con <Text as="span" color="brand.brown" fontWeight={500}>8% de recargo</Text>
                           </Text>
                         </HStack>
                         <HStack spacing={3}>
                           <MessageCircle size={16} color="#25D366" strokeWidth={1.5} />
-                          <Text fontFamily="body" fontSize="sm" color="brand.muted">
+                          <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted">
                             Transferencia bancaria con <Text as="span" color="brand.success" fontWeight={500}>10% de descuento</Text>
                           </Text>
                         </HStack>
@@ -185,13 +187,13 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                     </TabPanel>
                     <TabPanel p={0}>
                       <VStack align="flex-start" spacing={2}>
-                        <Text fontFamily="body" fontSize="sm" color="brand.muted">
+                        <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted">
                           📦 Envíos a todo el país por correo o transporte
                         </Text>
-                        <Text fontFamily="body" fontSize="sm" color="brand.muted">
+                        <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted">
                           🏙️ Retiro en punto de entrega disponible
                         </Text>
-                        <Text fontFamily="body" fontSize="xs" color="brand.brown" mt={1}>
+                        <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.brown" mt={1}>
                           El costo y tiempo de envío se coordina por WhatsApp
                         </Text>
                       </VStack>

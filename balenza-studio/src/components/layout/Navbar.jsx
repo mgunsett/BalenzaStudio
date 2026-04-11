@@ -4,7 +4,7 @@ import {
   Menu, MenuButton, MenuList, MenuItem, useDisclosure,
   Drawer, DrawerOverlay, DrawerContent, DrawerBody, DrawerCloseButton,
   VStack, Divider, Accordion, AccordionItem, AccordionButton,
-  AccordionPanel, AccordionIcon,
+  AccordionPanel, AccordionIcon, Image,
 } from "@chakra-ui/react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ShoppingBag, User, ChevronDown, Menu as MenuIcon } from "lucide-react";
@@ -13,7 +13,7 @@ import { useScrollPosition } from "../../hooks/useScrollPosition";
 import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { CATEGORIES } from "../../utils/constants";
-import Logo from "../ui/Logo";
+import logo from "../../assets/images/logo.png";
 import CartPopover from "../cart/CartPopover";
 import AuthModal from "../auth/AuthModal";
 
@@ -70,7 +70,9 @@ const Navbar = () => {
         <Flex align="center" justify="space-between" maxW="1400px" mx="auto">
 
           {/* Logo */}
-          <Link to="/"><Logo /></Link>
+          <Link to="/">
+            <Image src={logo} alt="Balenza Studio" w={{ base: "100px", md: "120px" }} h="auto" />
+          </Link>
 
           {/* Nav links — desktop */}
           <HStack spacing={8} display={{ base: "none", lg: "flex" }}>
@@ -165,6 +167,7 @@ const Navbar = () => {
 
             {/* Usuario */}
             <IconButton
+              display={{ base: "none", lg: "inline-flex"  }}
               icon={<User size={22} strokeWidth={1.5} />}
               variant="ghost"
               color="brand.dark"
@@ -175,6 +178,7 @@ const Navbar = () => {
 
             {isAdmin && (
               <Button
+                display={{ base: "none", lg: "inline-flex"  }}
                 variant="outline"
                 size="sm"
                 fontSize="2xs"
@@ -216,7 +220,9 @@ const Navbar = () => {
 
           {/* Logo en drawer */}
           <Box px={6} pt={2} pb={4}>
-            <Link to="/" onClick={mobileMenu.onClose}><Logo /></Link>
+            <Link to="/" onClick={mobileMenu.onClose}>
+              <Image src={logo} alt="Balenza Studio" w={{ base: "100px", md: "120px" }} h="auto" />
+            </Link>
           </Box>
 
           <Divider borderColor="brand.beige" />

@@ -8,22 +8,22 @@ const TRUST_ITEMS = [
   {
     icon: Truck,
     title: "Envíos a todo el país",
-    desc: "Hacemos llegar tu pedido a cualquier punto de Argentina",
+    desc: "A cualquier punto de Argentina",
   },
   {
     icon: CreditCard,
     title: "Todas las tarjetas",
-    desc: "Pagá con MercadoPago en hasta 12 cuotas sin interés",
+    desc: "Pagá con MercadoPago en cuotas",
   },
   {
     icon: ShieldCheck,
     title: "Compra 100% segura",
-    desc: "Tus datos y pagos siempre protegidos",
+    desc: "Tus datos siempre protegidos",
   },
   {
     icon: Package,
     title: "Empaque cuidado",
-    desc: "Cada prenda llega perfecta, con packaging especial",
+    desc: "Cada prenda es especial",
   },
 ];
 
@@ -46,12 +46,12 @@ const TrustBanner = () => {
   }, []);
 
   return (
-    <Box ref={ref} py={14} px={{ base: 4, md: 8 }} bg="brand.cream" borderY="0.5px solid" borderColor="rgba(160,120,90,0.15)">
+    <Box ref={ref} py={14} px={{ base: 2, md: 8 }} bg="brand.cream" borderY="0.5px solid" borderColor="rgba(160,120,90,0.15)">
       <Flex
         justify="space-around"
         align="flex-start"
         wrap="wrap"
-        gap={8}
+        gap={{ base: 6, md: 8 }}
         maxW="1100px"
         mx="auto"
       >

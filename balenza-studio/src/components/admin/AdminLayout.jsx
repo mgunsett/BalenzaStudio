@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import {
   Box, Flex, VStack, HStack, Text, IconButton, useDisclosure,
   Drawer, DrawerBody, DrawerOverlay, DrawerContent, DrawerCloseButton,
-  Avatar, Menu, MenuButton, MenuList, MenuItem, Divider,
+  Avatar, Menu, MenuButton, MenuList, MenuItem, Divider, Image,
 } from "@chakra-ui/react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { gsap } from "gsap";
@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { logoutUser } from "../../services/firebase/auth";
-import Logo from "../ui/Logo";
+import logo from "../../assets/images/logo.png";
 
 const NAV_ITEMS = [
   { icon: LayoutDashboard, label: "Dashboard",  path: "/admin"            },
@@ -35,7 +35,7 @@ const SidebarContent = ({ onClose }) => {
     <VStack h="100%" align="stretch" spacing={0}>
       {/* Logo */}
       <Box px={6} py={6} borderBottom="0.5px solid rgba(160,120,90,0.15)">
-        <Logo size="sm" />
+        <Image src={logo} alt="Balenza Studio" w="90px" h="auto" />
         <Text fontFamily="body" fontSize="2xs" letterSpacing="0.2em" textTransform="uppercase" color="brand.brown" mt={1}>
           Panel Admin
         </Text>
@@ -173,7 +173,7 @@ const AdminLayout = () => {
           top={0}
           zIndex={100}
         >
-          <Logo size="sm" />
+          <Image src={logo} alt="Balenza Studio" w="90px" h="auto" />
           <IconButton
             icon={<MenuIcon size={20} strokeWidth={1.5} />}
             variant="ghost"

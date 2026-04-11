@@ -1,11 +1,11 @@
 import { useState } from "react";
 import {
   Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
-  Tabs, TabList, TabPanels, Tab, TabPanel, VStack, Text,
+  Tabs, TabList, TabPanels, Tab, TabPanel, VStack, Text, Image,
 } from "@chakra-ui/react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import Logo from "../ui/Logo";
+import logo from "../../assets/images/logo.png";
 
 const AuthModal = ({ isOpen, onClose }) => {
   const [tab, setTab] = useState(0);
@@ -23,7 +23,7 @@ const AuthModal = ({ isOpen, onClose }) => {
         />
         <ModalBody p={{ base: 6, sm: 8 }}>
           <VStack spacing={6}>
-            <Logo size="md" />
+            <Image src={logo} alt="Balenza Studio" w={{ base: "100px", md: "120px" }} h="auto" />
 
             <Tabs
               index={tab}

@@ -173,6 +173,8 @@ const HeroCarousel = () => {
               objectFit="cover"
               objectPosition="center"
               opacity={0.7}
+              pointerEvents="none"
+              filter={{ base: "blur(2px)", md: "none" }}
             />
           
 
@@ -213,15 +215,15 @@ const HeroCarousel = () => {
       >
         <VStack
           ref={textRef}
-          align={{ base: "center", md: "flex-start" }}
-          spacing={5}
+          align={{ base: "flex-start", md: "flex-start" }}
+          spacing={{ base: 4, md: 5 }}
           maxW="600px"
         >
           {/* Eyebrow */}
           <Text
             ref={eyebrowRef}
             fontFamily="body"
-            fontSize="xs"
+            fontSize={{ base: "2xs", md: "sm" }}
             letterSpacing="0.35em"
             textTransform="uppercase"
             color="rgba(44,26,14,0.55)"
@@ -247,6 +249,7 @@ const HeroCarousel = () => {
           {/* Subtítulo */}
           <Text
             ref={subtitleRef}
+            display={{ base: "none", md: "block" }}
             fontFamily="heading"
             fontStyle="italic"
             fontSize={{ base: "lg", md: "xl" }}
@@ -263,12 +266,14 @@ const HeroCarousel = () => {
               size="lg"
               fontSize="xs"
               letterSpacing="0.25em"
+              bg={{ base: "brand.dark", md: "transparent" }}
+              color={{ base: "brand.white", md: "brand.dark" }}
               px={10}
               py={6}
               onClick={() => navigate(slide.ctaLink)}
-              borderColor="brand.dark"
+              borderColor={{ base: "brand.muted", md: "brand.dark" }}
               _hover={{
-                bg: "brand.dark",
+                bg: { base: "brand.muted", md: "brand.dark" },
                 color: "brand.white",
                 transform: "translateY(-2px)",
               }}

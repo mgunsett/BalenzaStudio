@@ -78,40 +78,39 @@ const AboutSection = () => {
             <Text
               fontFamily="heading"
               fontWeight={300}
-              fontSize={{ base: "3xl", md: "4xl" }}
+              fontSize={{ base: "2xl", md: "4xl" }}
               color="brand.dark"
               lineHeight={1.15}
               letterSpacing="0.04em"
             >
-              Moda con{" "}
+              Indumentaria con{" "}
               <Text as="span" fontStyle="italic">
                 propósito
               </Text>
             </Text>
 
-            <Text fontFamily="body" fontSize="md" color="brand.muted" lineHeight={1.9}>
+            <Text fontFamily="body" fontSize={{ base: "sm", md: "md" }} color="brand.muted" lineHeight={1.9}>
               En BALENZA Studio creemos que vestirse bien es un acto de confianza en una misma.
-              Diseñamos prendas para la mujer contemporánea: versátiles, de calidad y con una
-              estética cuidada que trasciende las tendencias.
+              Ofrecemos prendas para la mujer cotidiana: versátiles, de calidad y con una
+              estética cuidada que trasciende .
             </Text>
 
             <Text fontFamily="body" fontSize="sm" color="brand.muted" lineHeight={1.8}>
-              Cada pieza de nuestra colección es seleccionada con atención al detalle,
-              priorizando materiales nobles y cortes que favorecen. Porque cuando te sentís
-              bien con lo que usás, todo lo demás fluye.
+              Nuestro compromiso es que vos te sientas segura y auténtica en cada prenda, 
+              porque la moda tambien es una forma de sentirse bien.
             </Text>
 
             <Flex gap={8} pt={2}>
               {[
-                { num: "100%", label: "Calidad garantizada" },
-                { num: "3+",   label: "Años de trayectoria" },
-                { num: "∞",   label: "Estilo atemporal" },
+                { num: "100%", label: "Confianza" },
+                { num: "2+",   label: "Años de trayectoria" },
+                { num: "⌂",   label: "Empresa familiar" },
               ].map((item) => (
                 <VStack key={item.label} align="flex-start" spacing={0}>
-                  <Text fontFamily="heading" fontWeight={300} fontSize="2xl" color="brand.brown">
+                  <Text fontFamily="heading" fontWeight={300} fontSize={{ base: "4xl", md: "2xl" }} color="brand.brown">
                     {item.num}
                   </Text>
-                  <Text fontFamily="body" fontSize="2xs" letterSpacing="0.1em" textTransform="uppercase" color="brand.muted">
+                  <Text fontFamily="body" fontSize={{ base: "2xs", md: "xs" }} letterSpacing="0.1em" textTransform="uppercase" color="brand.muted">
                     {item.label}
                   </Text>
                 </VStack>
@@ -127,6 +126,7 @@ const AboutSection = () => {
               src="https://placehold.co/560x700/E8D5C4/7A6555?text=BALENZA+Studio"
               alt="BALENZA Studio"
               w="100%"
+              h={{base : "50vh", md: "70vh"}}
               borderRadius="xl"
               objectFit="cover"
             />
@@ -135,8 +135,8 @@ const AboutSection = () => {
                 position="absolute"
                 left="-25%"
                 bottom="-8%"
-                w="20vw"
-                h="20vw"
+                w={{ base: "40vw", md: "20vw" }}
+                h={{ base: "40vw", md: "20vw" }}
                 maxW="350px"
                 maxH="350px"
                 borderRadius="full"

@@ -62,7 +62,7 @@ const CategoryBanner = () => {
               borderRadius="xl"
               cursor="pointer"
               role="group"
-              h={{ base: "320px", md: "480px" }}
+              h={{ base: "260px", md: "460px" }}
               onClick={() => navigate(`/categoria/${cat.slug}`)}
             >
               <Image
@@ -112,7 +112,7 @@ const CategoryBanner = () => {
                 bottom={6}
                 left={6}
                 align="flex-start"
-                spacing={1}
+                spacing={{ base: 0, md: 1 }}
               >
                 <Text fontFamily="heading" fontWeight={300} fontSize="2xl" color="brand.white" letterSpacing="0.08em">
                   {cat.label}
@@ -126,7 +126,7 @@ const CategoryBanner = () => {
                   transition="opacity 0.3s"
                   color="brand.sand"
                 >
-                  <Text fontFamily="body" fontSize="xs" letterSpacing="0.15em" textTransform="uppercase">
+                  <Text fontFamily="body" fontSize="xs" letterSpacing="0.15em" textTransform="uppercase" >
                     Ver todo
                   </Text>
                   <ArrowRight size={14} />

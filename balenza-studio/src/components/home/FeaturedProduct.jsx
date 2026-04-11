@@ -73,7 +73,7 @@ const FeaturedProduct = () => {
     <Box ref={sectionRef} py={{ base: 16, md: 24 }} px={{ base: 4, md: 8, lg: 16 }} bg="brand.nude" overflow="hidden">
       <Grid
         templateColumns={{ base: "1fr", lg: "1fr 1fr" }}
-        gap={{ base: 12, lg: 16 }}
+        gap={{ base: 10 , lg: 16 }}
         maxW="1200px"
         mx="auto"
         alignItems="center"
@@ -113,7 +113,7 @@ const FeaturedProduct = () => {
 
         {/* Info del producto */}
         <GridItem ref={infoRef}>
-          <VStack align="flex-start" spacing={6}>
+          <VStack align="flex-start" spacing={{ base: 4, md: 6 }}>
             <Badge variant="brand" fontSize="2xs">Producto destacado</Badge>
 
             <VStack align="flex-start" spacing={1}>

@@ -1,9 +1,10 @@
 import {
-  Box, Grid, VStack, HStack, Text, Link, Divider, Flex,
+  Box, Grid, VStack, HStack, Text, Link, Divider, Flex, Image,
 } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import Logo from "../ui/Logo";
+import logo from "../../assets/images/logo.png";
 import { SOCIAL_LINKS, CATEGORIES } from "../../utils/constants";
+import { LiaLaptopCodeSolid } from "react-icons/lia";
 
 const Instagram = ({ size = 16, strokeWidth = 1.5, ...props }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -32,11 +33,9 @@ const Footer = () => {
         {/* Marca */}
         <VStack align="flex-start" spacing={4}>
           <Box filter="invert(1) sepia(1) saturate(0.3) brightness(1.5)">
-            <Logo size="md" />
+            <Image src={logo} alt="Balenza Studio" w={{ base: "100px", md: "120px" }} h="auto" />
           </Box>
-          <Text fontFamily="body" fontSize="sm" color="rgba(237,224,212,0.6)" lineHeight={1.8} maxW="280px">
-            Moda femenina con carácter. Prendas diseñadas para acompañarte en cada momento con elegancia y confort.
-          </Text>
+          
           <HStack spacing={3} pt={2}>
             {[
               { href: SOCIAL_LINKS.instagram, Icon: Instagram },
@@ -61,7 +60,7 @@ const Footer = () => {
 
         {/* Categorías */}
         <VStack align="flex-start" spacing={3}>
-          <Text fontFamily="body" fontSize="2xs" letterSpacing="0.3em" textTransform="uppercase" color="brand.sand" mb={1}>
+          <Text fontFamily="body" fontSize={{ base: "2xs", md: "xs" }} letterSpacing="0.3em" textTransform="uppercase" color="brand.sand" mb={1}>
             Tienda
           </Text>
           {CATEGORIES.map((cat) => (
@@ -82,7 +81,7 @@ const Footer = () => {
 
         {/* Info */}
         <VStack align="flex-start" spacing={3}>
-          <Text fontFamily="body" fontSize="2xs" letterSpacing="0.3em" textTransform="uppercase" color="brand.sand" mb={1}>
+          <Text fontFamily="body" fontSize={{ base: "2xs", md: "xs" }} letterSpacing="0.3em" textTransform="uppercase" color="brand.sand" mb={1}>
             Información
           </Text>
           {[
@@ -103,7 +102,7 @@ const Footer = () => {
             </Link>
           ))}
           <Text fontFamily="body" fontSize="sm" color="rgba(237,224,212,0.6)">
-            📍 Argentina
+            Santa Fe, Argentina
           </Text>
           <Link
             href={`https://wa.me/${import.meta.env.VITE_WHATSAPP_NUMBER}`}
@@ -114,7 +113,7 @@ const Footer = () => {
             _hover={{ color: "wa.green" }}
             transition="color 0.2s"
           >
-            📱 WhatsApp
+            +54 342 5957-222
           </Link>
         </VStack>
       </Grid>
@@ -132,9 +131,18 @@ const Footer = () => {
         <Text fontFamily="body" fontSize="xs" color="rgba(237,224,212,0.35)" letterSpacing="0.05em">
           © {year} BALENZA Studio. Todos los derechos reservados.
         </Text>
-        <Text fontFamily="body" fontSize="xs" color="rgba(237,224,212,0.25)" letterSpacing="0.05em">
-          Pagos procesados por MercadoPago
-        </Text>
+        <Text fontSize="12px" color="rgba(255,255,255,0.3)" letterSpacing="0.05em">
+            Desarrollo Web -{' '} 
+            <Link 
+            href="https://matiasgunsett.netlify.app/" 
+            isExternal 
+            color="#2D5A47" 
+            _hover={{ borderColor: '#e8d5a370', color: '#e8d5a380' }}
+            transition="color 0.3s"
+            >
+              Matias Gunsett <LiaLaptopCodeSolid style={{ marginLeft: '4px', display: 'inline-block', verticalAlign: 'middle', fontSize: '20px', color: '#E8D5A3' }} />
+            </Link>
+          </Text>
       </Flex>
     </Box>
   );
