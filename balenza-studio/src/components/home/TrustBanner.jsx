@@ -23,8 +23,9 @@ const TRUST_ITEMS = [
   {
     icon: Package,
     title: "Empaque cuidado",
-    desc: "Cada prenda es especial",
+    desc: "Estamos en cada detalle de tu pedido",
   },
+
 ];
 
 const TrustBanner = () => {
@@ -77,10 +78,10 @@ const TrustBanner = () => {
               <item.icon size={22} color="var(--chakra-colors-brand-brown)" strokeWidth={1.5} />
             </Box>
             <VStack spacing={1}>
-              <Text fontFamily="body" fontWeight={500} fontSize="sm" color="brand.dark" textAlign="center" letterSpacing="0.02em">
+              <Text fontFamily="body" fontWeight={500} fontSize={{ base: "xs", md: "sm" }} color="brand.dark" textAlign="center" letterSpacing="0.02em">
                 {item.title}
               </Text>
-              <Text fontFamily="body" fontSize="xs" color="brand.muted" textAlign="center" lineHeight={1.6}>
+              <Text fontFamily="body" fontSize={{base: "10px", md: "xs"}} color="brand.muted" textAlign="center" lineHeight={1.6}>
                 {item.desc}
               </Text>
             </VStack>
