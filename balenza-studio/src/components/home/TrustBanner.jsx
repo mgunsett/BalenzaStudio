@@ -47,7 +47,7 @@ const TrustBanner = () => {
   }, []);
 
   return (
-    <Box ref={ref} py={14} px={{ base: 2, md: 8 }} bg="brand.cream" borderY="0.5px solid" borderColor="rgba(160,120,90,0.15)">
+    <Box ref={{base: 'none',md:ref}} py={14} px={{ base: 2, md: 8 }} bg="brand.cream" borderY="0.5px solid" borderColor="rgba(160,120,90,0.15)">
       <Flex
         justify="space-around"
         align="flex-start"
@@ -62,7 +62,7 @@ const TrustBanner = () => {
             ref={(el) => (items.current[i] = el)}
             align="center"
             spacing={3}
-            w={{base:'150px', md:'180px'}}
+            w={{base:'125px', md:'180px'}}
             maxW="200px"
           >
             <Box
