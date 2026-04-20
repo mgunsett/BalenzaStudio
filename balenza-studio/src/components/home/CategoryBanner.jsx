@@ -71,9 +71,9 @@ const CategoryBanner = () => {
                 w="100%" h="100%"
                 objectFit="cover"
                 objectPosition="center"
-                opacity={0.7}
+                opacity={0.8}
                 transform="scale(1)"
-                _groupHover={{ transform: "scale(1.05)", opacity: 0.9 }}
+                _groupHover={{ transform: "scale(1.05)", opacity: 1 }}
                 transition="transform 0.6s ease, opacity 0.6s ease "
               />
               {/* Elementos decorativos */}
