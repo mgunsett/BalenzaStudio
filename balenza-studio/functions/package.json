@@ -1,0 +1,17 @@
+{
+  "name": "balenza-functions",
+  "version": "1.0.0",
+  "engines": { "node": "20" },
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "echo 'No linter configured'"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0",
+    "mercadopago": "^2.0.6"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.3.0"
+  }
+}

@@ -61,7 +61,8 @@ const TrustBanner = () => {
             ref={(el) => (items.current[i] = el)}
             align="center"
             spacing={3}
-            maxW="220px"
+            w={{base:'150px', md:'180px'}}
+            maxW="200px"
           >
             <Box
               w="52px" h="52px"

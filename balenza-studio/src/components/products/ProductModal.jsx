@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import {
   Modal, ModalOverlay, ModalContent, ModalBody, ModalCloseButton,
   Grid, GridItem, VStack, HStack, Text, Button, Badge, Box,
-  Divider, Tabs, TabList, TabPanels, Tab, TabPanel,
+  Divider, Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator
 } from "@chakra-ui/react";
 import { gsap } from "gsap";
 import { ShoppingBag, CreditCard, MessageCircle } from "lucide-react";
@@ -13,12 +13,18 @@ import ImageGallery from "./ImageGallery";
 import SizeSelector from "./SizeSelector";
 import RelatedProducts from "./RelatedProducts";
 
-const ProductModal = ({ product, isOpen, onClose }) => {
+const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
+  const [currentProduct, setCurrentProduct] = useState(initialProduct);
   const [selectedSize, setSelectedSize] = useState(null);
   const contentRef = useRef(null);
   const { addItem } = useCart();
 
-  const { products: related } = useRelatedProducts(product?.category, product?.id);
+  // Sincronizar con prop externa (cuando se abre el modal con otro producto)
+  useEffect(() => {
+    if (initialProduct) setCurrentProduct(initialProduct);
+  }, [initialProduct]);
+
+  const { products: related } = useRelatedProducts(currentProduct?.category, currentProduct?.id);
 
   useEffect(() => {
     if (isOpen) {
@@ -31,10 +37,11 @@ const ProductModal = ({ product, isOpen, onClose }) => {
         );
       }
     }
-  }, [isOpen, product]);
+  }, [isOpen, currentProduct]);
 
-  if (!product) return null;
+  if (!currentProduct) return null;
 
+  const product = currentProduct;
   const hasDiscount  = product.salePrice && product.salePrice < product.price;
   const discountPct  = hasDiscount ? Math.round((1 - product.salePrice / product.price) * 100) : 0;
   const displayPrice = product.salePrice || product.price;
@@ -45,16 +52,30 @@ const ProductModal = ({ product, isOpen, onClose }) => {
     onClose();
   };
 
+  const handleRelatedClick = (relatedProduct) => {
+    setCurrentProduct(relatedProduct);
+    setSelectedSize(null);
+    // Scroll al inicio del modal
+    const modalBody = contentRef.current?.closest('.chakra-modal__body');
+    if (modalBody) modalBody.scrollTop = 0;
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      size={{ base: "full", md: "5xl" }}
+      size={{ base: "full", md: "5xl", lg: "6xl" }}
       scrollBehavior="inside"
       motionPreset="slideInBottom"
+      w="100%"
+      isCentered
     >
       <ModalOverlay />
-      <ModalContent bg="brand.cream" borderRadius={{ base: 0, md: "xl" }} maxH="95vh">
+      <ModalContent 
+      bg="brand.cream" 
+      borderRadius={{ base: 0, md: "xl" }} 
+      maxH={"95vh"}
+      >
         <ModalCloseButton
           top={4} right={{ base: 2, md: 4 }}
           borderRadius="full"
@@ -153,16 +174,13 @@ const ProductModal = ({ product, isOpen, onClose }) => {
                         textTransform="uppercase"
                         color="brand.muted"
                         pb={2}
-                        _selected={{
-                          color: "brand.dark",
-                          borderBottom: "1.5px solid",
-                          borderColor: "brand.brown",
-                        }}
+                        
                       >
                         {tab}
                       </Tab>
                     ))}
                   </TabList>
+                   <TabIndicator mt='-1.5px' height='2px' bg='brand.brown' borderRadius='1px' />
                   <TabPanels pt={4}>
                     <TabPanel p={0}>
                       <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted" lineHeight={1.8}>
@@ -207,7 +225,7 @@ const ProductModal = ({ product, isOpen, onClose }) => {
           {/* Productos relacionados */}
           {related.length > 0 && (
             <Box mt={12}>
-              <RelatedProducts products={related} />
+              <RelatedProducts products={related} onProductClick={handleRelatedClick} />
             </Box>
           )}
         </ModalBody>

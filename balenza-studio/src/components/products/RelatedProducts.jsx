@@ -1,13 +1,11 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import { Box, Text, HStack, IconButton, VStack } from "@chakra-ui/react";
 import { gsap } from "gsap";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
-import ProductModal from "./ProductModal";
 
-const RelatedProducts = ({ products = [] }) => {
+const RelatedProducts = ({ products = [], onProductClick }) => {
   const sliderRef = useRef(null);
-  const [selected, setSelected] = useState(null);
 
   const scroll = (dir) => {
     const el = sliderRef.current;
@@ -78,18 +76,10 @@ const RelatedProducts = ({ products = [] }) => {
           <ProductCard
             key={product.id}
             product={product}
-            onClick={() => setSelected(product)}
+            onClick={() => onProductClick?.(product)}
           />
         ))}
       </Box>
-
-      {selected && (
-        <ProductModal
-          product={selected}
-          isOpen={!!selected}
-          onClose={() => setSelected(null)}
-        />
-      )}
     </Box>
   );
 };

@@ -8,7 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 .env.local
 .env.*.local
-/functions
+.env
+functions/.env
+functions/node_modules
 node_modules
 dist
 dist-ssr

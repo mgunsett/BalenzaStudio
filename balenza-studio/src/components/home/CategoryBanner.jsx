@@ -62,7 +62,7 @@ const CategoryBanner = () => {
               borderRadius="xl"
               cursor="pointer"
               role="group"
-              h={{ base: "260px", md: "460px" }}
+              h={{ base: "150px", sm: "300px", md: "460px" }}
               onClick={() => navigate(`/categoria/${cat.slug}`)}
             >
               <Image

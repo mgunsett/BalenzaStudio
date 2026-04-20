@@ -46,7 +46,7 @@ const AboutSection = () => {
     <Box
       id="about"
       ref={sectionRef}
-      py={{ base: 20, md: 32 }}
+      py={{ base: 16, md: 32 }}
       px={{ base: 6, md: 12, lg: 20 }}
       bg="brand.beige"
       overflow="hidden"
