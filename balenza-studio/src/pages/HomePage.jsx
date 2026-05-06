@@ -6,6 +6,7 @@ import CategoryBanner from "../components/home/CategoryBanner";
 import AboutSection from "../components/home/AboutSection";
 import ProductGrid from "../components/products/ProductGrid";
 import TrustBanner from "../components/home/TrustBanner";
+import ReviewsSection from "../components/home/ReviewsSection";
 import SocialSection from "../components/home/SocialSection";
 import ProductModal from "../components/products/ProductModal";
 import { useProducts } from "../hooks/useProducts";
@@ -30,10 +31,11 @@ const HomePage = () => {
         products={products}
         loading={loading}
         onProductClick={handleProductClick}
-        title="Nuevos ingresos"
-        subtitle="Colección actual"
+        title="🔥 Más vendidos"
+        subtitle="Los favoritos de nuestras clientas"
       />
       <TrustBanner />
+      <ReviewsSection />
       <SocialSection />
 
       {selectedProduct && (

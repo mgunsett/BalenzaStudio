@@ -61,7 +61,7 @@ const Navbar = () => {
       <Box
         ref={navRef}
         position="fixed"
-        top={0} left={0} right={0}
+        top="36px" left={0} right={0}
         zIndex={1000}
         px={{ base: 4, md: 8, lg: 12 }}
         py={4}

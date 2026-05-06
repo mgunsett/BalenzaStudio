@@ -11,10 +11,10 @@ const SLIDES = [
   {
     id: 1,
     bg: "linear-gradient(135deg, #E8D5C4 0%, #D4B896 60%, #C4A880 100%)",
-    eyebrow: "Nueva Colección · Otoño 2025",
-    title: "Elegancia\nAtemporal",
-    subtitle: "Prendas que te definen",
-    cta: "Explorar colección",
+    eyebrow: "Nueva colección disponible ✨",
+    title: "Stock limitado\n— Llegó lo nuevo",
+    subtitle: "Envíos a todo el país · Últimas unidades disponibles",
+    cta: "Comprar ahora",
     ctaLink: "/categoria/remeras",
     accent: "#A0785A",
   },
@@ -23,8 +23,8 @@ const SLIDES = [
     bg: "linear-gradient(135deg, #D4DDE8 0%, #B8C9D8 60%, #A8BBCC 100%)",
     eyebrow: "Pantalones · Wide Leg",
     title: "Confort\nSin Límites",
-    subtitle: "Para cada momento del día",
-    cta: "Ver pantalones",
+    subtitle: "Stock limitado — Envíos a todo el país",
+    cta: "Comprar ahora",
     ctaLink: "/categoria/pantalones",
     accent: "#6B8A9E",
   },
@@ -33,8 +33,8 @@ const SLIDES = [
     bg: "linear-gradient(135deg, #DDD5E8 0%, #C8B8D8 60%, #B8A8CC 100%)",
     eyebrow: "Camperas · Temporada",
     title: "Estilo que\nAbriga",
-    subtitle: "Diseño y funcionalidad en equilibrio",
-    cta: "Ver camperas",
+    subtitle: "Pocas unidades disponibles — no te quedes sin la tuya",
+    cta: "Comprar ahora",
     ctaLink: "/categoria/camperas",
     accent: "#7A6590",
   },
@@ -249,12 +249,11 @@ const HeroCarousel = () => {
           {/* Subtítulo */}
           <Text
             ref={subtitleRef}
-            display={{ base: "none", md: "block" }}
-            fontFamily="heading"
-            fontStyle="italic"
-            fontSize={{ base: "lg", md: "xl" }}
-            color="brand.muted"
-            letterSpacing="0.03em"
+            fontFamily="body"
+            fontSize={{ base: "sm", md: "md" }}
+            color="brand.dark"
+            letterSpacing="0.02em"
+            opacity={0.75}
           >
             {slide.subtitle}
           </Text>
@@ -262,21 +261,20 @@ const HeroCarousel = () => {
           {/* CTA */}
           <Box ref={ctaRef}>
             <Button
-              variant="outline"
+              variant="primary"
               size="lg"
-              fontSize="xs"
-              letterSpacing="0.25em"
-              bg={{ base: "brand.dark", md: "transparent" }}
-              color={{ base: "brand.white", md: "brand.dark" }}
+              fontSize="sm"
+              fontWeight={600}
+              letterSpacing="0.15em"
               px={10}
               py={6}
+              textTransform="uppercase"
               onClick={() => navigate(slide.ctaLink)}
-              borderColor={{ base: "brand.muted", md: "brand.dark" }}
               _hover={{
-                bg: { base: "brand.muted", md: "brand.dark" },
-                color: "brand.white",
                 transform: "translateY(-2px)",
+                boxShadow: "0 8px 24px rgba(44,26,14,0.25)",
               }}
+              transition="all 0.2s"
             >
               {slide.cta}
             </Button>

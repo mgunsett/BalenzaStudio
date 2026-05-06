@@ -5,7 +5,7 @@ import {
   Divider, Tabs, TabList, TabPanels, Tab, TabPanel, TabIndicator
 } from "@chakra-ui/react";
 import { gsap } from "gsap";
-import { ShoppingBag, CreditCard, MessageCircle } from "lucide-react";
+import { ShoppingBag, CreditCard, MessageCircle, Truck, RefreshCw, AlertCircle } from "lucide-react";
 import { useCart } from "../../context/CartContext";
 import { formatPrice } from "../../utils/formatters";
 import { useRelatedProducts } from "../../hooks/useProducts";
@@ -45,6 +45,10 @@ const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
   const hasDiscount  = product.salePrice && product.salePrice < product.price;
   const discountPct  = hasDiscount ? Math.round((1 - product.salePrice / product.price) * 100) : 0;
   const displayPrice = product.salePrice || product.price;
+
+  // Stock total para urgencia
+  const totalStock = Object.values(product.sizes || {}).reduce((a, b) => a + b, 0);
+  const isLowStock = totalStock > 0 && totalStock <= 5;
 
   const handleAddToCart = () => {
     if (!selectedSize) return;
@@ -98,13 +102,13 @@ const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
 
             {/* Info */}
             <GridItem>
-              <VStack align="flex-start" spacing={5} h="100%">
-                {/* Badges + categoría */}
-                <HStack spacing={2}>
+              <VStack align="flex-start" spacing={4} h="100%">
+                {/* Categoría + badges */}
+                <HStack spacing={2} flexWrap="wrap">
                   <Text fontFamily="body" fontSize="2xs" letterSpacing="0.2em" textTransform="uppercase" color="brand.muted">
                     {product.category}
                   </Text>
-                  {product.featured && <Badge variant="brand">Destacado</Badge>}
+                  {product.featured && <Badge variant="brand">Nuevo</Badge>}
                   {hasDiscount && <Badge variant="sale">−{discountPct}%</Badge>}
                 </HStack>
 
@@ -120,9 +124,9 @@ const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
                   {product.name}
                 </Text>
 
-                {/* Precio */}
+                {/* Precio — prominente */}
                 <HStack spacing={3} align="baseline">
-                  <Text fontFamily="body" fontWeight={500} fontSize="2xl" color="brand.dark">
+                  <Text fontFamily="body" fontWeight={700} fontSize="3xl" color="brand.dark">
                     {formatPrice(displayPrice)}
                   </Text>
                   {hasDiscount && (
@@ -132,7 +136,23 @@ const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
                   )}
                 </HStack>
 
-                <Divider borderColor="rgba(160,120,90,0.15)" />
+                {/* Urgencia */}
+                {isLowStock && (
+                  <HStack
+                    bg="orange.50"
+                    border="1px solid"
+                    borderColor="orange.200"
+                    borderRadius="md"
+                    px={3} py={2}
+                    spacing={2}
+                    w="100%"
+                  >
+                    <AlertCircle size={14} color="var(--chakra-colors-orange-500)" />
+                    <Text fontFamily="body" fontSize="xs" color="orange.700" fontWeight={500}>
+                      ¡Quedan pocas unidades disponibles!
+                    </Text>
+                  </HStack>
+                )}
 
                 {/* Selector de talle */}
                 <SizeSelector
@@ -141,28 +161,51 @@ const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
                   onChange={setSelectedSize}
                 />
 
-                {/* Botón agregar */}
-                <VStack w="100%" spacing={3} pt={2}>
+                {/* CTA principal — Comprar ahora */}
+                <VStack w="100%" spacing={2} pt={1}>
                   <Button
                     variant="primary"
                     size="lg"
                     w="100%"
                     py={7}
-                    fontSize="xs"
-                    letterSpacing="0.2em"
+                    fontSize="sm"
+                    fontWeight={600}
+                    letterSpacing="0.15em"
                     leftIcon={<ShoppingBag size={16} strokeWidth={1.5} />}
                     onClick={handleAddToCart}
                     isDisabled={!selectedSize}
-                    opacity={!selectedSize ? 0.5 : 1}
+                    opacity={!selectedSize ? 0.55 : 1}
                     transition="all 0.2s"
+                    _hover={{ transform: "translateY(-2px)", boxShadow: "0 6px 20px rgba(44,26,14,0.2)" }}
                   >
-                    Agregar al carrito
+                    Comprar ahora
                   </Button>
+                  {!selectedSize && (
+                    <Text fontFamily="body" fontSize="xs" color="brand.muted" textAlign="center">
+                      Seleccioná un talle para continuar
+                    </Text>
+                  )}
+                </VStack>
+
+                {/* Beneficios rápidos */}
+                <VStack align="flex-start" spacing={2} w="100%">
+                  <HStack spacing={2}>
+                    <Truck size={14} color="var(--chakra-colors-brand-brown)" strokeWidth={1.8} />
+                    <Text fontFamily="body" fontSize="xs" color="brand.muted">Envíos a todo el país</Text>
+                  </HStack>
+                  <HStack spacing={2}>
+                    <RefreshCw size={14} color="var(--chakra-colors-brand-brown)" strokeWidth={1.8} />
+                    <Text fontFamily="body" fontSize="xs" color="brand.muted">Cambios disponibles sin problema</Text>
+                  </HStack>
+                  <HStack spacing={2}>
+                    <CreditCard size={14} color="var(--chakra-colors-brand-brown)" strokeWidth={1.8} />
+                    <Text fontFamily="body" fontSize="xs" color="brand.muted">Pagos seguros por MercadoPago</Text>
+                  </HStack>
                 </VStack>
 
                 <Divider borderColor="rgba(160,120,90,0.15)" />
 
-                {/* Tabs: Descripción / Pagos */}
+                {/* Tabs: Descripción / Pagos / Envíos */}
                 <Tabs variant="unstyled" w="100%">
                   <TabList gap={6}>
                     {["Descripción", "Formas de pago", "Envíos"].map((tab) => (
@@ -174,15 +217,22 @@ const ProductModal = ({ product: initialProduct, isOpen, onClose }) => {
                         textTransform="uppercase"
                         color="brand.muted"
                         pb={2}
-                        
                       >
                         {tab}
                       </Tab>
                     ))}
                   </TabList>
-                   <TabIndicator mt='-1.5px' height='2px' bg='brand.brown' borderRadius='1px' />
+                  <TabIndicator mt='-1.5px' height='2px' bg='brand.brown' borderRadius='1px' />
                   <TabPanels pt={4}>
                     <TabPanel p={0}>
+                      <VStack align="flex-start" spacing={2} mb={3}>
+                        {["Calce cómodo y tallaje amplio", "Ideal para uso diario", "Tela suave y liviana"].map((b) => (
+                          <HStack key={b} spacing={2}>
+                            <Box w="5px" h="5px" borderRadius="full" bg="brand.brown" flexShrink={0} />
+                            <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted">{b}</Text>
+                          </HStack>
+                        ))}
+                      </VStack>
                       <Text fontFamily="body" fontSize={{ base: "xs", md: "sm" }} color="brand.muted" lineHeight={1.8}>
                         {product.description || "Sin descripción disponible."}
                       </Text>
