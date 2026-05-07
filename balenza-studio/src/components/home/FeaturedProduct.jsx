@@ -80,10 +80,15 @@ const FeaturedProduct = () => {
       >
         {/* Galería de imágenes */}
         <GridItem ref={imagesRef}>
-          <Grid templateColumns="2fr 1fr" templateRows="auto auto" gap={3} h={{ base: "500px", md: "620px" }}>
-            <GridItem rowSpan={2}>
+          <Grid
+            templateColumns={{ base: "1fr", sm: "2fr 1fr" }}
+            templateRows={{ base: "repeat(3, minmax(0, 1fr))", sm: "auto auto" }}
+            gap={3}
+            h={{ base: "420px", sm: "500px", md: "620px" }}
+          >
+            <GridItem rowSpan={{ base: 1, sm: 2 }}>
               <Image
-                src={images[0]}
+                src={images[0] || `https://placehold.co/600x800/EDE0D4/7A6555?text=${product.name}`}
                 alt={product.name}
                 w="100%" h="100%"
                 objectFit="cover"
@@ -92,7 +97,7 @@ const FeaturedProduct = () => {
             </GridItem>
             <GridItem>
               <Image
-                src={images[1]}
+                src={images[1] || images[0] || `https://placehold.co/600x800/EDE0D4/7A6555?text=${product.name}`}
                 alt={product.name}
                 w="100%" h="100%"
                 objectFit="cover"
@@ -101,7 +106,7 @@ const FeaturedProduct = () => {
             </GridItem>
             <GridItem>
               <Image
-                src={images[2]}
+                src={images[2] || images[0] || `https://placehold.co/600x800/EDE0D4/7A6555?text=${product.name}`}
                 alt={product.name}
                 w="100%" h="100%"
                 objectFit="cover"

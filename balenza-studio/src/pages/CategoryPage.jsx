@@ -59,8 +59,8 @@ const CategoryPage = () => {
 
       {/* Toolbar */}
       <Box px={{ base: 4, md: 8 }} py={4} bg="brand.nude" borderBottom="0.5px solid rgba(160,120,90,0.1)">
-        <HStack justify="flex-end" maxW="1300px" mx="auto">
-          <HStack spacing={2}>
+        <HStack justify={{ base: "flex-start", md: "flex-end" }} maxW="1300px" mx="auto">
+          <HStack spacing={2} w={{ base: "100%", md: "auto" }} align="center" flexWrap="wrap">
             <Text fontFamily="body" fontSize="xs" color="brand.muted" letterSpacing="0.1em" textTransform="uppercase">
               Ordenar
             </Text>
@@ -68,7 +68,7 @@ const CategoryPage = () => {
               value={sort}
               onChange={(e) => setSort(e.target.value)}
               size="sm"
-              w="180px"
+              w={{ base: "100%", sm: "180px" }}
               bg="brand.white"
               border="0.5px solid rgba(160,120,90,0.3)"
               borderRadius="sm"

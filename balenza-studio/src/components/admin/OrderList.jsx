@@ -239,7 +239,7 @@ const OrderList = () => {
         <Box flex={1} minW={0}>
           {/* Filtros */}
           <HStack spacing={3} mb={4} flexWrap="wrap" gap={2}>
-            <Box position="relative" flex={1} minW="180px">
+            <Box position="relative" flex={1} minW={{ base: "100%", sm: "180px" }}>
               <Search
                 size={14}
                 color="var(--chakra-colors-brand-muted)"
@@ -263,7 +263,7 @@ const OrderList = () => {
             <Select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              w="170px"
+              w={{ base: "100%", sm: "170px" }}
               bg="brand.cream"
               border="0.5px solid rgba(160,120,90,0.3)"
               borderRadius="lg"
@@ -330,6 +330,7 @@ const OrderList = () => {
                       px={2}
                       fontFamily="body"
                       flexShrink={0}
+                      ml={{ base: 0, md: "auto" }}
                     >
                       {st.label}
                     </Badge>

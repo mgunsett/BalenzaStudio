@@ -84,7 +84,7 @@ const CheckoutPage = () => {
           </Text>
         </VStack>
 
-        <Grid templateColumns={{ base: "1fr", lg: "1fr 400px" }} gap={10}>
+        <Grid templateColumns={{ base: "1fr", lg: "1fr 400px" }} gap={{ base: 8, lg: 10 }}>
           {/* Formulario */}
           <GridItem>
             <VStack align="stretch" spacing={8}>
@@ -96,11 +96,17 @@ const CheckoutPage = () => {
                   p={4}
                   border="0.5px solid rgba(160,120,90,0.15)"
                 >
-                  <HStack justify="space-between">
+                  <HStack justify="space-between" flexWrap="wrap" gap={3} align="flex-start">
                     <Text fontFamily="body" fontSize="sm" color="brand.muted">
                       ¿Tenés cuenta? Iniciá sesión para autocompletar tus datos
                     </Text>
-                    <Button variant="outline" size="sm" fontSize="xs" onClick={authModal.onOpen}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      fontSize="xs"
+                      onClick={authModal.onOpen}
+                      w={{ base: "100%", sm: "auto" }}
+                    >
                       Ingresar
                     </Button>
                   </HStack>
@@ -181,8 +187,8 @@ const CheckoutPage = () => {
               borderRadius="xl"
               border="0.5px solid rgba(160,120,90,0.15)"
               p={6}
-              position={{ lg: "sticky" }}
-              top={{ lg: "100px" }}
+              position={{ base: "static", lg: "sticky" }}
+              top={{ base: "auto", lg: "100px" }}
             >
               <Text fontFamily="heading" fontWeight={300} fontSize="xl" color="brand.dark" mb={5}>
                 Tu pedido

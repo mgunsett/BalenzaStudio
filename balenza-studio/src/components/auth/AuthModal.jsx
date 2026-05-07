@@ -11,7 +11,7 @@ const AuthModal = ({ isOpen, onClose }) => {
   const [tab, setTab] = useState(0);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", sm: "md" }} motionPreset="slideInBottom">
+      <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", sm: "md" }} motionPreset="slideInBottom" scrollBehavior="inside">
       <ModalOverlay />
       <ModalContent bg="brand.cream" borderRadius={{ base: 0, sm: "xl" }}>
         <ModalCloseButton

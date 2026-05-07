@@ -106,7 +106,7 @@ const StockManager = () => {
 
       {/* Filtros */}
       <HStack spacing={3} flexWrap="wrap">
-        <Box position="relative" flex={1} minW="180px">
+        <Box position="relative" flex={1} minW={{ base: "100%", sm: "180px" }}>
           <Search
             size={14}
             color="var(--chakra-colors-brand-muted)"
@@ -130,7 +130,7 @@ const StockManager = () => {
         <Select
           value={catFilter}
           onChange={(e) => setCatFilter(e.target.value)}
-          w="170px"
+          w={{ base: "100%", sm: "170px" }}
           bg="brand.cream"
           border="0.5px solid rgba(160,120,90,0.3)"
           borderRadius="lg"
@@ -230,7 +230,7 @@ const StockManager = () => {
               </Flex>
 
               {/* Grid de talles — SIZES = ["XS","S","M","L","XL"] */}
-              <SimpleGrid columns={SIZES.length} gap={3}>
+              <SimpleGrid columns={{ base: 2, sm: 3, md: SIZES.length }} gap={3}>
                 {SIZES.map((size) => {
                   const val   = sizes[size] ?? 0;
                   const color = val === 0 ? "brand.error"

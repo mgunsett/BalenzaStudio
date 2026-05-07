@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
     <Box minH="100vh" bg="brand.nude">
       <TopBarOptimized />
       <Navbar />
-      <Box as="main" pt="108px">
+      <Box as="main" pt={{ base: "96px", md: "108px" }}>
         {children}
       </Box>
       <Footer />

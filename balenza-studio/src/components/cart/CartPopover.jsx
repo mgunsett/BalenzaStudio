@@ -30,7 +30,8 @@ const CartPopover = ({ children }) => {
       <PopoverTrigger>{children}</PopoverTrigger>
       <PopoverContent
         ref={popRef}
-        w="300px"
+        w={{ base: "calc(100vw - 2rem)", sm: "300px" }}
+        maxW="300px"
         bg="brand.white"
         border="0.5px solid rgba(160,120,90,0.2)"
         borderRadius="lg"

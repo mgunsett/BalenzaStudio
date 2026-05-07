@@ -80,7 +80,7 @@ const ProfilePage = () => {
     <Box ref={ref} py={{ base: 8, md: 16 }} px={{ base: 4, md: 8, lg: 16 }} minH="80vh">
       <Box maxW="860px" mx="auto">
         {/* Header */}
-        <HStack spacing={4} mb={10}>
+        <HStack spacing={4} mb={10} flexWrap="wrap" align="flex-start" gap={4}>
           <Avatar
             size="lg"
             name={profile ? `${profile.name} ${profile.lastName}` : user?.email}
@@ -99,7 +99,8 @@ const ProfilePage = () => {
             size="sm"
             fontSize="xs"
             color="brand.muted"
-            ml="auto"
+            w={{ base: "100%", sm: "auto" }}
+            ml={{ md: "auto" }}
             onClick={handleLogout}
             _hover={{ color: "brand.error", bg: "transparent" }}
           >
@@ -112,12 +113,14 @@ const ProfilePage = () => {
             bg="brand.beige"
             borderRadius="full"
             p={1}
-            display="inline-flex"
+            display="flex"
+            w={{ base: "100%", sm: "auto" }}
             mb={8}
           >
             {["Mis datos", "Mis pedidos"].map((label) => (
               <Tab
                 key={label}
+                flex={1}
                 fontFamily="body"
                 fontSize="xs"
                 letterSpacing="0.1em"

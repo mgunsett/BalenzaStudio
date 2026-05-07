@@ -18,6 +18,7 @@ const CartItem = ({ item }) => {
       py={4}
       borderBottom="0.5px solid rgba(160,120,90,0.12)"
       align="flex-start"
+      flexWrap={{ base: "wrap", sm: "nowrap" }}
     >
       {/* Imagen */}
       <Image
@@ -31,7 +32,7 @@ const CartItem = ({ item }) => {
       />
 
       {/* Info */}
-      <VStack align="flex-start" spacing={1} flex={1}>
+      <VStack align="flex-start" spacing={1} flex={1} minW={0}>
         <Text fontFamily="heading" fontSize="lg" color="brand.dark" lineHeight={1.2} noOfLines={2}>
           {item.product.name}
         </Text>
@@ -76,6 +77,7 @@ const CartItem = ({ item }) => {
         size="sm"
         borderRadius="full"
         color="brand.muted"
+        ml={{ base: "auto", sm: 0 }}
         onClick={() => removeItem(item.key)}
         _hover={{ bg: "brand.beige", color: "brand.dark" }}
         aria-label="Eliminar del carrito"

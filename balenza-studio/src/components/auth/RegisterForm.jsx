@@ -65,7 +65,7 @@ const RegisterForm = ({ onSuccess }) => {
         </Alert>
       )}
 
-      <SimpleGrid columns={2} gap={3} w="100%">
+      <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} w="100%">
         <FormControl isInvalid={!!errors.name}>
           <FormLabel fontFamily="body" fontSize="2xs" letterSpacing="0.15em" textTransform="uppercase" color="brand.muted" mb={1}>Nombre</FormLabel>
           <Input {...register("name")} placeholder="María" {...fieldStyle} />

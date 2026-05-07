@@ -62,7 +62,7 @@ const ProductGrid = ({ products = [], loading, onProductClick, title, subtitle }
 
       <SimpleGrid
         ref={gridRef}
-        columns={{ base: 2, md: 3, lg: 4 }}
+        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
         gap={{ base: 4, md: 6, lg: 8 }}
         maxW="1300px"
         mx="auto"

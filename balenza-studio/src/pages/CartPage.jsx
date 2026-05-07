@@ -38,7 +38,7 @@ const CartPage = () => {
     <Box ref={ref} py={{ base: 8, md: 16 }} px={{ base: 4, md: 8, lg: 16 }} minH="80vh">
       <Box maxW="1100px" mx="auto">
         {/* Header */}
-        <HStack justify="space-between" mb={10}>
+        <HStack justify="space-between" mb={10} flexWrap="wrap" align="flex-start" gap={4}>
           <VStack align="flex-start" spacing={1}>
             <Text fontFamily="body" fontSize="2xs" letterSpacing="0.3em" textTransform="uppercase" color="brand.brown">
               Mi selección
@@ -55,6 +55,9 @@ const CartPage = () => {
             fontSize="xs"
             letterSpacing="0.1em"
             textTransform="uppercase"
+            w={{ base: "100%", sm: "auto" }}
+            justifyContent={{ base: "center", sm: "flex-start" }}
+            ml={{ md: "auto" }}
             onClick={() => navigate(-1)}
             _hover={{ color: "brand.dark", bg: "transparent" }}
           >
@@ -62,7 +65,7 @@ const CartPage = () => {
           </Button>
         </HStack>
 
-        <Grid templateColumns={{ base: "1fr", lg: "1fr 380px" }} gap={10}>
+        <Grid templateColumns={{ base: "1fr", lg: "1fr 380px" }} gap={{ base: 8, lg: 10 }}>
           {/* Lista de items */}
           <GridItem>
             <VStack spacing={0} align="stretch">
@@ -93,8 +96,8 @@ const CartPage = () => {
               borderRadius="xl"
               border="0.5px solid rgba(160,120,90,0.15)"
               p={6}
-              position={{ lg: "sticky" }}
-              top={{ lg: "100px" }}
+              position={{ base: "static", lg: "sticky" }}
+              top={{ base: "auto", lg: "100px" }}
             >
               <Text fontFamily="heading" fontWeight={300} fontSize="xl" color="brand.dark" mb={5}>
                 Resumen del pedido

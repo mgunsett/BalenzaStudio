@@ -239,7 +239,7 @@ const ProductForm = () => {
               <Text fontFamily="heading" fontWeight={300} fontSize="lg" color="brand.dark" letterSpacing="0.05em" mb={4}>
                 Precios
               </Text>
-              <SimpleGrid columns={2} gap={4}>
+              <SimpleGrid columns={{ base: 1, sm: 2 }} gap={4}>
                 <FormControl isInvalid={!!errors.price}>
                   <FormLabel {...labelStyle}>Precio normal (ARS) *</FormLabel>
                   <Input {...register("price")} type="number" placeholder="15990" {...fieldStyle} h="44px" px={4} />
@@ -309,7 +309,7 @@ const ProductForm = () => {
                   Total: {totalStockVal} u.
                 </Badge>
               </Flex>
-              <SimpleGrid columns={5} gap={3}>
+              <SimpleGrid columns={{ base: 2, sm: 3, md: 5 }} gap={3}>
                 {SIZES.map((size) => {
                   const val   = sizes[size] ?? 0;
                   const color = val === 0 ? "brand.muted" : val <= 3 ? "orange.500" : "brand.success";
@@ -361,13 +361,14 @@ const ProductForm = () => {
         </SimpleGrid>
 
         {/* Acciones */}
-        <HStack justify="flex-end" mt={5} spacing={3}>
+        <HStack justify="flex-end" mt={5} spacing={3} flexWrap="wrap">
           <Button
             variant="ghost"
             size="lg"
             fontSize="xs"
             letterSpacing="0.15em"
             color="brand.muted"
+            w={{ base: "100%", sm: "auto" }}
             onClick={() => navigate("/admin/productos")}
             isDisabled={saving}
             _hover={{ color: "brand.dark", bg: "brand.beige" }}
@@ -381,6 +382,7 @@ const ProductForm = () => {
             letterSpacing="0.2em"
             px={8}
             py={6}
+            w={{ base: "100%", sm: "auto" }}
             isLoading={saving}
             loadingText="Guardando..."
             leftIcon={<Save size={15} />}

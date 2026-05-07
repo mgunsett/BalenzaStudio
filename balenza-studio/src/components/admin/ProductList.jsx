@@ -99,7 +99,7 @@ const ProductList = () => {
 
       {/* Filtros */}
       <HStack spacing={3} flexWrap="wrap" gap={3}>
-        <Box position="relative" flex={1} minW="200px">
+        <Box position="relative" flex={1} minW={{ base: "100%", sm: "200px" }}>
           <Search
             size={14}
             color="var(--chakra-colors-brand-muted)"
@@ -123,7 +123,7 @@ const ProductList = () => {
         <Select
           value={catFilter}
           onChange={(e) => setCatFilter(e.target.value)}
-          w="170px"
+          w={{ base: "100%", sm: "170px" }}
           bg="brand.cream"
           border="0.5px solid rgba(160,120,90,0.3)"
           borderRadius="lg"
@@ -228,6 +228,7 @@ const ProductList = () => {
                     borderRadius="full"
                     px={3} py={1}
                     fontFamily="body"
+                    ml={{ base: 0, md: "auto" }}
                   >
                     {st.label} ({totalStock(product.sizes)})
                   </Badge>
