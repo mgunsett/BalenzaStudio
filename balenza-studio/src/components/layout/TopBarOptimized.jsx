@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { Box, Flex, Text, HStack, Badge } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Truck, CreditCard, RefreshCw, Gift } from "lucide-react";
+import { Truck, CreditCard, RefreshCw, Tag } from "lucide-react";
 
 const MotionFlex = motion(Flex);
 
 const MESSAGES = [
   {
-    icon: Gift,
-    text: "15% OFF en tu primera compra con",
-    highlight: "BIENVENIDA15",
+    icon: Tag,
+    text: "15% OFF abonando con ",
+    highlight: "TRANSFERENCIA O EFECTIVO",
     urgent: true,
     colorText: "brand.dark",
   },
@@ -76,7 +76,7 @@ const TopBarOptimized = () => {
             exit={{ y: -20, opacity: 0 }}
             transition={{ duration: 0.4 }}
             align="center"
-            gap={4}
+            gap={2}
           >
             <currentMessage.icon size={14} strokeWidth={2} />
             <Text
@@ -96,14 +96,13 @@ const TopBarOptimized = () => {
                 py={0.5}
                 fontWeight="700"
                 fontSize="2xs"
+               
               >
                 {currentMessage.highlight}
               </Badge>
             )}
           </MotionFlex>
         </AnimatePresence>
-
-        
       </Flex>
     </Box>
   );

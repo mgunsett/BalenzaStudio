@@ -2,8 +2,8 @@ import { useRef, useEffect } from "react";
 import { Box, Flex, Text, Button, VStack, HStack, Badge, Container } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
-import { TrendingUp, Heart, Truck, Shield } from "lucide-react";
-import banner_1 from "../../assets/images/hero/banner_1.svg";
+import { Heart, Truck, Shield } from "lucide-react";
+import banner_2 from "../../assets/images/hero/banner_2.svg";
 
 const HeroOptimized = () => {
   const navigate = useNavigate();
@@ -72,24 +72,35 @@ const HeroOptimized = () => {
       {/* HERO PRINCIPAL */}
       <Box
         position="relative"
-        h={{ base: "80vh", md: "85vh" }}
-        maxH="900px"
+        h={{ base: "92svh", sm: "88svh", md: "85vh" }}
+        minH={{ base: "580px", md: "auto" }}
+        maxH={{ base: "none", md: "900px" }}
       >
         {/* Imagen de fondo */}
         <Box
           ref={imageRef}
           as="img"
-          src={banner_1}
+          src={banner_2}
           alt="Balenza Studio - Nueva Colección"
           position="absolute"
           inset={0}
           w="100%"
           h="100%"
           objectFit="cover"
-          objectPosition="center"
-          opacity={0.7}
+          objectPosition={{ base: "60% center", md: "center" }}
+          opacity={{ base: 0.45, md: 0.7 }}
           pointerEvents="none"
-          filter={{ base: "blur(1px)", md: "none" }}
+          filter={{ base: "blur(2px)", md: "none" }}
+        />
+
+        {/* Overlay gradiente para legibilidad en mobile */}
+        <Box
+          display={{ base: "block", md: "none" }}
+          position="absolute"
+          inset={0}
+          bgGradient="linear(to-b, rgba(245,239,230,0.55) 0%, rgba(237,224,212,0.75) 60%, rgba(237,224,212,0.92) 100%)"
+          zIndex={2}
+          pointerEvents="none"
         />
 
         {/* Elementos decorativos */}
@@ -120,7 +131,14 @@ const HeroOptimized = () => {
         />
 
         {/* Contenido */}
-        <Container maxW="container.xl" h="full">
+        <Container
+          maxW="container.xl"
+          h="full"
+          ml={{ base: 0, md: 24 }}
+          px={{ base: 5, sm: 6, md: 0 }}
+          position="relative"
+          zIndex={10}
+        >
           <Flex
             h="full"
             align="center"
@@ -130,10 +148,10 @@ const HeroOptimized = () => {
           >
             <VStack
               align={{ base: "center", md: "flex-start" }}
-              spacing={6}
-              maxW="650px"
+              spacing={{ base: 4, sm: 5, md: 6 }}
+              maxW={{ base: "100%", md: "650px" }}
               textAlign={{ base: "center", md: "left" }}
-              px={{ base: 4, md: 0 }}
+              pb={{ base: 4, md: 0 }}
             >
               {/* BADGE SUPERIOR CON URGENCIA */}
               <HStack
@@ -172,10 +190,10 @@ const HeroOptimized = () => {
                 <Text
                   as="h1"
                   fontFamily="heading"
-                  fontSize={{ base: "5xl", md: "6xl", lg: "7xl" }}
+                  fontSize={{ base: "4xl", sm: "5xl", md: "6xl", lg: "7xl" }}
                   fontWeight="400"
                   color="brand.dark"
-                  lineHeight="1.1"
+                  lineHeight={{ base: "1.15", md: "1.1" }}
                   letterSpacing="0.02em"
                 >
                   Tu estilo{" "}
@@ -206,9 +224,9 @@ const HeroOptimized = () => {
               {/* SUBTÍTULO CON PROPUESTA DE VALOR */}
               <Text
                 ref={subtitleRef}
-                fontSize={{ base: "md", md: "lg", lg: "xl" }}
+                fontSize={{ base: "sm", sm: "md", md: "lg", lg: "xl" }}
                 color="brand.muted"
-                maxW="550px"
+                maxW={{ base: "100%", md: "550px" }}
                 lineHeight="1.6"
               >
                 Prendas pensadas para vos. Comodidad, calidad y estilo que te
@@ -216,21 +234,22 @@ const HeroOptimized = () => {
               </Text>
 
               {/* CTAs PRINCIPALES */}
-              <HStack
+              <Flex
                 ref={ctaRef}
-                spacing={4}
-                flexWrap={{ base: "wrap", sm: "nowrap" }}
-                w={{ base: "full", md: "auto" }}
+                direction={{ base: "column", sm: "row" }}
+                gap={{ base: 3, sm: 4 }}
+                w={{ base: "full", sm: "auto" }}
+                align={{ base: "stretch", sm: "center" }}
               >
                 <Button
                   size="lg"
                   bg="brand.brown"
                   color="white"
-                  px={8}
+                  px={{ base: 6, md: 8 }}
                   py={{ base: 6, md: 7 }}
                   fontSize={{ base: "sm", md: "md" }}
                   fontWeight="600"
-                  onClick={() => navigate("/categoria/remeras")}
+                  onClick={() => navigate("/categoria/camperas")}
                   _hover={{
                     bg: "brand.dark",
                     transform: "translateY(-2px)",
@@ -239,8 +258,8 @@ const HeroOptimized = () => {
                   _active={{ transform: "translateY(0)" }}
                   transition="all 0.3s"
                   boxShadow="lg"
-                  w={{ base: "full", sm: "auto" }}
                   minW={{ sm: "200px" }}
+                  borderRadius={{ base: "xl", md: "md" }}
                 >
                   Ver Nueva Colección →
                 </Button>
@@ -251,7 +270,7 @@ const HeroOptimized = () => {
                   borderColor="brand.brown"
                   borderWidth="2px"
                   color="brand.brown"
-                  px={8}
+                  px={{ base: 6, md: 8 }}
                   py={{ base: 6, md: 7 }}
                   fontSize={{ base: "sm", md: "md" }}
                   fontWeight="600"
@@ -263,41 +282,41 @@ const HeroOptimized = () => {
                     color: "brand.dark",
                   }}
                   onClick={() => {
-                    const productosSection = document.getElementById("productos");
+                    const productosSection = document.getElementById("categorias");
                     if (productosSection) {
-                      productosSection.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
+                      productosSection.scrollIntoView({ behavior: "smooth", block: "start" });
                     }
                   }}
-                  w={{ base: "full", sm: "auto" }}
                   minW={{ sm: "180px" }}
+                  borderRadius={{ base: "xl", md: "md" }}
                 >
                   Explorar productos
                 </Button>
-              </HStack>
+              </Flex>
 
               {/* TRUST INDICATORS INLINE */}
               <HStack
                 ref={trustRef}
-                spacing={{ base: 4, md: 6 }}
+                spacing={{ base: 0, md: 6 }}
+                gap={{ base: 3, md: 6 }}
                 color="brand.muted"
                 fontSize={{ base: "xs", md: "sm" }}
                 flexWrap="wrap"
                 justify={{ base: "center", md: "flex-start" }}
+                w={{ base: "full", md: "auto" }}
+                px={{ base: 2, md: 0 }}
               >
-                <HStack spacing={2}>
-                  <Truck size={18} />
-                  <Text fontWeight="500">Envíos gratis +$50.000</Text>
+                <HStack spacing={1.5}>
+                  <Truck size={15} />
+                  <Text fontWeight="500">Envíos gratis +$50k</Text>
                 </HStack>
-                <HStack spacing={2}>
-                  <Heart size={18} />
-                  <Text fontWeight="500">+2.500 clientas felices</Text>
+                <HStack spacing={1.5}>
+                  <Heart size={15} />
+                  <Text fontWeight="500">+2.500 clientas</Text>
                 </HStack>
-                <HStack spacing={2} display={{ base: "none", md: "flex" }}>
-                  <Shield size={18} />
-                  <Text fontWeight="500">Compra 100% segura</Text>
+                <HStack spacing={1.5}>
+                  <Shield size={15} />
+                  <Text fontWeight="500">Compra segura</Text>
                 </HStack>
               </HStack>
             </VStack>
@@ -306,29 +325,33 @@ const HeroOptimized = () => {
       </Box>
 
       {/* MINI-BANNER SECUNDARIO CON URGENCIA */}
-      <Box bg="brand.brown" color="white" py={3} textAlign="center">
-        <Container maxW="container.xl">
-          <HStack
+      <Box bg="brand.brown" color="white" py={{ base: 2.5, md: 3 }} textAlign="center">
+        <Container maxW="container.xl" px={{ base: 4, md: 8 }}>
+          <Flex
             justify="center"
-            spacing={{ base: 2, md: 4 }}
+            align="center"
+            gap={{ base: 1, sm: 2, md: 4 }}
             flexWrap="wrap"
             fontSize={{ base: "xs", md: "sm" }}
+            flexDir={{ base: "column", sm: "row" }}
           >
-            <Text fontWeight="600">🎁 OFERTA ESPECIAL:</Text>
-            <Text>
-              15% OFF en tu primera compra con el código{" "}
+            <Text fontWeight="700" letterSpacing="wide">🎁 OFERTA ESPECIAL:</Text>
+            <Text textAlign="center">
+              Abonando con transferencia ó efectivo{"  "}
               <Badge
                 bg="white"
                 color="brand.brown"
                 px={2}
-                py={1}
+                py={0.5}
                 fontWeight="700"
-                fontSize={{ base: "2xs", md: "xs" }}
+                fontSize={{ base: "xs", md: "xs" }}
+                borderRadius="md"
+                ml={1}
               >
-                BIENVENIDA15
+                15% de descuento
               </Badge>
             </Text>
-          </HStack>
+          </Flex>
         </Container>
       </Box>
     </Box>

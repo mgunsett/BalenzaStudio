@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback } from "react";
+/*--------import { useRef, useEffect, useState, useCallback } from "react";
 import { Box, Flex, Text, Button, VStack, HStack, IconButton } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
@@ -150,7 +150,7 @@ const HeroCarousel = () => {
       overflow="hidden"
       maxH="900px"
     >
-      {/* Slides de fondo */}
+  
       {SLIDES.map((s, i) => (
         <Box
           key={s.id}
@@ -178,7 +178,7 @@ const HeroCarousel = () => {
             />
           
 
-          {/* Elementos decorativos */}
+          {/* Elementos decorativos 
           <Box
             position="absolute"
             right="-5%"
@@ -204,7 +204,7 @@ const HeroCarousel = () => {
         </Box>
       ))}
 
-      {/* Contenido del slide */}
+      {/* Contenido del slide 
       <Flex
         position="absolute"
         inset={0}
@@ -219,7 +219,7 @@ const HeroCarousel = () => {
           spacing={{ base: 4, md: 5 }}
           maxW="600px"
         >
-          {/* Eyebrow */}
+          {/* Eyebrow 
           <Text
             ref={eyebrowRef}
             fontFamily="body"
@@ -231,7 +231,7 @@ const HeroCarousel = () => {
             {slide.eyebrow}
           </Text>
 
-          {/* Título */}
+          {/* Título 
           <Text
             ref={titleRef}
             fontFamily="heading"
@@ -246,7 +246,7 @@ const HeroCarousel = () => {
             {slide.title}
           </Text>
 
-          {/* Subtítulo */}
+          {/* Subtítulo
           <Text
             ref={subtitleRef}
             fontFamily="body"
@@ -258,7 +258,7 @@ const HeroCarousel = () => {
             {slide.subtitle}
           </Text>
 
-          {/* CTA */}
+          {/* CTA 
           <Box ref={ctaRef}>
             <Button
               variant="primary"
@@ -282,7 +282,7 @@ const HeroCarousel = () => {
         </VStack>
       </Flex>
 
-      {/* Flechas de navegación */}
+      {/* Flechas de navegación
       <IconButton
         icon={<ChevronLeft size={20} strokeWidth={1.5} />}
         //display={{base:'none', md: 'flex' }}
@@ -321,7 +321,7 @@ const HeroCarousel = () => {
         aria-label="Siguiente"
       />
 
-      {/* Dots de navegación */}
+      {/* Dots de navegación 
       <HStack
         position="absolute"
         bottom={8}
@@ -350,3 +350,4 @@ const HeroCarousel = () => {
 };
 
 export default HeroCarousel;
+*/ 

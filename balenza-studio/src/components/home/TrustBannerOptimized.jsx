@@ -11,13 +11,13 @@ const TRUST_ITEMS = [
   {
     icon: Truck,
     title: "Envíos gratis",
-    highlight: "+$50.000",
+    highlight: "+ $80.000",
     desc: "A todo el país",
     color: "brand.brown",
   },
   {
     icon: CreditCard,
-    title: "Hasta 6 cuotas",
+    title: "Hasta 3 cuotas",
     highlight: "sin interés",
     desc: "Con todas las tarjetas",
     color: "brand.brown",
@@ -113,6 +113,7 @@ const TrustBannerOptimized = () => {
             <MotionVStack
               key={item.title}
               ref={(el) => (items.current[i] = el)}
+              role="group"
               align="center"
               spacing={4}
               w={{ base: "140px", sm: "160px", md: "180px" }}
@@ -141,19 +142,19 @@ const TrustBannerOptimized = () => {
                   opacity: 0.3,
                 }}
                 transition="all 0.3s"
-                _hover={{
+                _groupHover={{
                   bg: "brand.brown",
                   borderColor: "brand.brown",
                   transform: "scale(1.05)",
-                  "& svg": {
-                    color: "white !important",
-                  },
                 }}
               >
-                <item.icon
-                  size={28}
-                  color="var(--chakra-colors-brand-brown)"
+                <Icon
+                  as={item.icon}
+                  boxSize={7}
+                  color="brand.brown"
                   strokeWidth={1.8}
+                  transition="color 0.3s"
+                  _groupHover={{ color: "white" }}
                 />
               </Box>
 

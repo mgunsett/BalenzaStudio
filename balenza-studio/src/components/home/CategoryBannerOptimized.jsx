@@ -15,7 +15,7 @@ const CATEGORIES_DATA = [
   {
     slug: "remeras",
     label: "Remeras",
-    subtitle: "Básicos que no fallan",
+    subtitle: "Básicas que no fallan",
     description: "Comodidad y estilo para el día a día",
     image: section_remeras,
     badge: "Lo más vendido",
@@ -169,7 +169,7 @@ const CategoryBannerOptimized = () => {
                 right={0}
                 p={6}
                 align="flex-start"
-                spacing={3}
+                spacing={1}
                 color="white"
               >
                 {/* SUBTÍTULO */}
@@ -189,18 +189,12 @@ const CategoryBannerOptimized = () => {
                   fontWeight={400}
                   fontSize={{ base: "2xl", md: "3xl" }}
                   letterSpacing="0.05em"
+                  color="white"
                 >
                   {cat.label}
                 </Text>
 
-                {/* DESCRIPCIÓN */}
-                <Text
-                  fontSize="sm"
-                  opacity={0.9}
-                  mb={2}
-                >
-                  {cat.description}
-                </Text>
+               
 
                 {/* CTA */}
                 <Button
