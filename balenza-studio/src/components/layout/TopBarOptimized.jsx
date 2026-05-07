@@ -11,24 +11,28 @@ const MESSAGES = [
     text: "15% OFF en tu primera compra con",
     highlight: "BIENVENIDA15",
     urgent: true,
+    colorText: "brand.dark",
   },
   {
     icon: Truck,
-    text: "Envíos gratis en compras mayores a $50.000",
+    text: "Envíos gratis en compras mayores a $80.000",
     highlight: null,
     urgent: false,
+    colorText: "brand.beige",
   },
   {
     icon: CreditCard,
-    text: "Hasta 6 cuotas sin interés con todas las tarjetas",
+    text: "Hasta 3 cuotas sin interés con todas las tarjetas",
     highlight: null,
     urgent: false,
+    colorText: "brand.beige",
   },
   {
     icon: RefreshCw,
     text: "Cambios y devoluciones gratis por 30 días",
     highlight: null,
     urgent: false,
+    colorText: "brand.beige",
   },
 ];
 
@@ -72,7 +76,7 @@ const TopBarOptimized = () => {
             exit={{ y: -20, opacity: 0 }}
             transition={{ duration: 0.4 }}
             align="center"
-            gap={2}
+            gap={4}
           >
             <currentMessage.icon size={14} strokeWidth={2} />
             <Text
@@ -80,6 +84,7 @@ const TopBarOptimized = () => {
               fontSize={{ base: "xs", md: "sm" }}
               letterSpacing="0.05em"
               fontWeight={currentMessage.urgent ? "600" : "400"}
+              color={currentMessage.colorText || "white"}
             >
               {currentMessage.text}
             </Text>
@@ -98,26 +103,7 @@ const TopBarOptimized = () => {
           </MotionFlex>
         </AnimatePresence>
 
-        {/* INDICADORES DE POSICIÓN */}
-        <HStack
-          position="absolute"
-          right={4}
-          spacing={1}
-          display={{ base: "none", md: "flex" }}
-        >
-          {MESSAGES.map((_, i) => (
-            <Box
-              key={i}
-              w="5px"
-              h="5px"
-              borderRadius="full"
-              bg={i === currentIndex ? "white" : "whiteAlpha.400"}
-              transition="all 0.3s"
-              cursor="pointer"
-              onClick={() => setCurrentIndex(i)}
-            />
-          ))}
-        </HStack>
+        
       </Flex>
     </Box>
   );
