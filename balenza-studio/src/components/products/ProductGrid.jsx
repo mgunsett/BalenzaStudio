@@ -4,7 +4,7 @@ import {
 } from "@chakra-ui/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ProductCard from "./ProductCard";
+import ProductCardOptimized from "./ProductCardOptimized";
 
 const ProductGrid = ({ products = [], loading, onProductClick, title, subtitle }) => {
   const gridRef  = useRef(null);
@@ -68,7 +68,7 @@ const ProductGrid = ({ products = [], loading, onProductClick, title, subtitle }
         mx="auto"
       >
         {products.map((product) => (
-          <ProductCard
+          <ProductCardOptimized
             key={product.id}
             product={product}
             onClick={() => onProductClick(product)}

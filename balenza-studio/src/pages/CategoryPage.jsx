@@ -5,7 +5,7 @@ import {
 } from "@chakra-ui/react";
 import { useProducts } from "../hooks/useProducts";
 import ProductGrid from "../components/products/ProductGrid";
-import ProductModal from "../components/products/ProductModal";
+import ProductModalOptimized from "../components/products/ProductModalOptimized";
 import { CATEGORIES } from "../utils/constants";
 
 const CategoryPage = () => {
@@ -92,7 +92,7 @@ const CategoryPage = () => {
       />
 
       {selectedProduct && (
-        <ProductModal
+        <ProductModalOptimized
           product={selectedProduct}
           isOpen={isOpen}
           onClose={() => { onClose(); setSelectedProduct(null); }}

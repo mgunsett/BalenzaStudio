@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useDisclosure } from "@chakra-ui/react";
-import HeroCarousel from "../components/home/HeroCarousel";
+import HeroOptimized from "../components/home/HeroOptimized";
 import FeaturedProduct from "../components/home/FeaturedProduct";
-import CategoryBanner from "../components/home/CategoryBanner";
+import CategoryBannerOptimized from "../components/home/CategoryBannerOptimized";
 import AboutSection from "../components/home/AboutSection";
 import ProductGrid from "../components/products/ProductGrid";
-import TrustBanner from "../components/home/TrustBanner";
+import TrustBannerOptimized from "../components/home/TrustBannerOptimized";
 import ReviewsSection from "../components/home/ReviewsSection";
 import SocialSection from "../components/home/SocialSection";
-import ProductModal from "../components/products/ProductModal";
+import ProductModalOptimized from "../components/products/ProductModalOptimized";
 import { useProducts } from "../hooks/useProducts";
 
 const HomePage = () => {
@@ -23,9 +23,9 @@ const HomePage = () => {
 
   return (
     <>
-      <HeroCarousel />
+      <HeroOptimized />
       <FeaturedProduct />
-      <CategoryBanner />
+      <CategoryBannerOptimized />
       <AboutSection />
       <ProductGrid
         products={products}
@@ -34,12 +34,12 @@ const HomePage = () => {
         title="🔥 Más vendidos"
         subtitle="Los favoritos de nuestras clientas"
       />
-      <TrustBanner />
+      <TrustBannerOptimized />
       <ReviewsSection />
       <SocialSection />
 
       {selectedProduct && (
-        <ProductModal
+        <ProductModalOptimized
           product={selectedProduct}
           isOpen={isOpen}
           onClose={() => { onClose(); setSelectedProduct(null); }}
