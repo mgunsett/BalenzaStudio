@@ -281,12 +281,7 @@ const HeroOptimized = () => {
                     borderColor: "brand.dark",
                     color: "brand.dark",
                   }}
-                  onClick={() => {
-                    const productosSection = document.getElementById("categorias");
-                    if (productosSection) {
-                      productosSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                    }
-                  }}
+                  onClick={() => navigate("/categoria/todos")}
                   minW={{ sm: "180px" }}
                   borderRadius={{ base: "xl", md: "md" }}
                 >

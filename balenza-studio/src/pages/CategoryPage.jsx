@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Box, VStack, Text, useDisclosure, HStack, Select,
 } from "@chakra-ui/react";
@@ -10,9 +10,11 @@ import { CATEGORIES } from "../utils/constants";
 
 const CategoryPage = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
+  const isAllProducts = slug === "todos";
   const cat = CATEGORIES.find((c) => c.slug === slug);
 
-  const { products, loading } = useProducts({ category: slug });
+  const { products, loading } = useProducts(isAllProducts ? {} : { category: slug });
   const [filtered, setFiltered]         = useState([]);
   const [sort, setSort]                 = useState("newest");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -49,7 +51,7 @@ const CategoryPage = () => {
             Colección
           </Text>
           <Text fontFamily="heading" fontWeight={300} fontSize={{ base: "4xl", md: "5xl" }} color="brand.dark" letterSpacing="0.06em">
-            {cat?.label || slug}
+            {isAllProducts ? "Todos los productos" : (cat?.label || slug)}
           </Text>
           <Text fontFamily="body" fontSize="sm" color="brand.muted">
             {loading ? "Cargando..." : `${filtered.length} producto${filtered.length !== 1 ? "s" : ""}`}
@@ -60,6 +62,29 @@ const CategoryPage = () => {
       {/* Toolbar */}
       <Box px={{ base: 4, md: 8 }} py={4} bg="brand.nude" borderBottom="0.5px solid rgba(160,120,90,0.1)">
         <HStack justify={{ base: "flex-start", md: "flex-end" }} maxW="1300px" mx="auto">
+          <HStack spacing={2} w={{ base: "100%", md: "auto" }} align="center" flexWrap="wrap">
+            <Text fontFamily="body" fontSize="xs" color="brand.muted" letterSpacing="0.1em" textTransform="uppercase">
+              Categoría
+            </Text>
+            <Select
+              value={slug}
+              onChange={(e) => navigate(`/categoria/${e.target.value}`)}
+              size="sm"
+              w={{ base: "100%", sm: "220px" }}
+              bg="brand.white"
+              border="0.5px solid rgba(160,120,90,0.3)"
+              borderRadius="sm"
+              fontFamily="body"
+              fontSize="xs"
+              color="brand.dark"
+              _focus={{ borderColor: "brand.brown", boxShadow: "none" }}
+            >
+              <option value="todos">Todos los productos</option>
+              {CATEGORIES.map((category) => (
+                <option key={category.slug} value={category.slug}>{category.label}</option>
+              ))}
+            </Select>
+          </HStack>
           <HStack spacing={2} w={{ base: "100%", md: "auto" }} align="center" flexWrap="wrap">
             <Text fontFamily="body" fontSize="xs" color="brand.muted" letterSpacing="0.1em" textTransform="uppercase">
               Ordenar

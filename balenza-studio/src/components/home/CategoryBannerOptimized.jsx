@@ -223,7 +223,7 @@ const CategoryBannerOptimized = () => {
             variant="outline"
             borderColor="brand.brown"
             color="brand.brown"
-            onClick={() => navigate("/categoria/remeras")}
+            onClick={() => navigate("/categoria/todos")}
             _hover={{ bg: "brand.beige" }}
           >
             Ver todos los productos

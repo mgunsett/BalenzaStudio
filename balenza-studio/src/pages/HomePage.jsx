@@ -16,7 +16,7 @@ const HomePage = () => {
         eyebrow="Colección destacada"
         limit={8}
         ctaLabel="Ver catálogo completo"
-        ctaPath="/categoria/remeras"
+        ctaPath="/categoria/todos"
       />
       <TrustBannerOptimized />
       <FeaturedProduct />
