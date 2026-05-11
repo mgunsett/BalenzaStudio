@@ -11,6 +11,7 @@ import {
   Clock, Users, Heart, Share2, Ruler, ChevronRight
 } from "lucide-react";
 import { useCart } from "../../context/CartContext";
+import { useFavorites } from "../../context/FavoritesContext";
 import { formatPrice } from "../../utils/formatters";
 import { useRelatedProducts } from "../../hooks/useProducts";
 import ImageGallery from "./ImageGallery";
@@ -25,6 +26,7 @@ const ProductModalOptimized = ({ product: initialProduct, isOpen, onClose }) => 
   const [recentViews, setRecentViews] = useState(Math.floor(Math.random() * 15) + 8);
   const contentRef = useRef(null);
   const { addItem } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   // Sincronizar con prop externa
   useEffect(() => {
@@ -363,8 +365,9 @@ const ProductModalOptimized = ({ product: initialProduct, isOpen, onClose }) => 
                       color="brand.brown"
                       leftIcon={<Heart size={18} />}
                       size="md"
+                      onClick={() => toggleFavorite(product.id, product)}
                     >
-                      Favorito
+                      {isFavorite(product.id) ? "Quitar favorito" : "Favorito"}
                     </Button>
                     <Button
                       flex={1}

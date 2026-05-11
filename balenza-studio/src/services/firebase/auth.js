@@ -24,6 +24,7 @@ export const registerUser = async ({ email, password, name, lastName, dni, phone
     phone: phone || "",
     role: "customer",
     addresses: [],
+    favorites: [],
     createdAt: serverTimestamp(),
   });
 

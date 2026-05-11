@@ -1,6 +1,6 @@
 import {
   collection, doc, getDocs, getDoc, addDoc, updateDoc,
-  query, where, orderBy, limit, serverTimestamp,
+  query, where, orderBy, limit, serverTimestamp, documentId,
 } from "firebase/firestore";
 import { db } from "./config";
 
@@ -66,4 +66,24 @@ export const getFeaturedProducts = () => getProducts({ featured: true, limit: 1 
 export const getRelatedProducts = async (category, excludeId, max = 4) => {
   const products = await getProducts({ category, limit: max + 1 });
   return products.filter((p) => p.id !== excludeId).slice(0, max);
+};
+
+export const getProductsByIds = async (ids = []) => {
+  if (!ids.length) return [];
+
+  const chunks = [];
+  for (let i = 0; i < ids.length; i += 10) chunks.push(ids.slice(i, i + 10));
+
+  const results = [];
+  for (const batch of chunks) {
+    const q = query(
+      collection(db, PRODUCTS_COL),
+      where(documentId(), "in", batch)
+    );
+    const snap = await getDocs(q);
+    results.push(...snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+  }
+
+  const map = new Map(results.map((p) => [p.id, p]));
+  return ids.map((id) => map.get(id)).filter(Boolean);
 };

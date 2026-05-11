@@ -16,6 +16,21 @@ export const ORDER_STATUS = {
 
 export const TRANSFER_DISCOUNT = 0.10;
 
+export const SHIPPING_COSTS = {
+  local:  0,
+  nearby: 3500,
+  far:    11000,
+};
+
+export const NEARBY_CITIES = [
+  "SANTA FE",
+  "SANTO TOME",
+  "RINCON",
+  "COLASTINE",
+  "ESPERANZA",
+  "SAUCE VIEJO",
+];
+
 export const SOCIAL_LINKS = {
   instagram: "https://instagram.com/balenzastudio",
   facebook:  "https://facebook.com/balenzastudio",

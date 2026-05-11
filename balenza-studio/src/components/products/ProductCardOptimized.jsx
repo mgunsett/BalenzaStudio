@@ -7,17 +7,18 @@ import { Heart, ShoppingBag, Eye, TrendingUp } from "lucide-react";
 import { gsap } from "gsap";
 import { formatPrice } from "../../utils/formatters";
 import { useCart } from "../../context/CartContext";
+import { useFavorites } from "../../context/FavoritesContext";
 import toast from "react-hot-toast";
 
 const MotionBox = motion(Box);
 
 const ProductCardOptimized = ({ product, onClick }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const cardRef = useRef(null);
   const imgRef = useRef(null);
   const { addItem } = useCart();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   // Calcular descuento
   const discount = product.salePrice
@@ -70,11 +71,7 @@ const ProductCardOptimized = ({ product, onClick }) => {
 
   const handleFavorite = (e) => {
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    toast.success(isFavorite ? 'Eliminado de favoritos' : 'Agregado a favoritos', {
-      duration: 1500,
-      icon: isFavorite ? '💔' : '❤️',
-    });
+    toggleFavorite(product.id, product);
   };
 
   return (
@@ -252,8 +249,8 @@ const ProductCardOptimized = ({ product, onClick }) => {
               icon={
                 <Heart
                   size={16}
-                  fill={isFavorite ? "#A0785A" : "none"}
-                  color={isFavorite ? "#A0785A" : "white"}
+                  fill={isFavorite(product.id) ? "#A0785A" : "none"}
+                  color={isFavorite(product.id) ? "#A0785A" : "white"}
                 />
               }
               size="sm"

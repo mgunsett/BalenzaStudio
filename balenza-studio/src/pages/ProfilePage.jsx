@@ -2,17 +2,20 @@ import { useState, useEffect, useRef } from "react";
 import {
   Box, VStack, HStack, Text, Input, Button, SimpleGrid,
   Divider, Avatar, Badge, Tabs, TabList, TabPanels, Tab, TabPanel,
-  FormControl, FormLabel, Spinner,
+  FormControl, FormLabel, Spinner, useDisclosure,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { useAuth } from "../context/AuthContext";
+import { useFavorites } from "../context/FavoritesContext";
 import { logoutUser } from "../services/firebase/auth";
 import { getOrdersByUser } from "../services/firebase/orders";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../services/firebase/config";
 import { formatPrice, formatDate } from "../utils/formatters";
 import { ORDER_STATUS } from "../utils/constants";
+import ProductGrid from "../components/products/ProductGrid";
+import ProductModalOptimized from "../components/products/ProductModalOptimized";
 import toast from "react-hot-toast";
 
 const fieldStyle = {
@@ -30,12 +33,16 @@ const fieldStyle = {
 
 const ProfilePage = () => {
   const { user, profile } = useAuth();
+  const { favoriteProducts, loading: favoritesLoading } = useFavorites();
   const navigate          = useNavigate();
+  const location          = useLocation();
   const ref               = useRef(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [orders,   setOrders]  = useState([]);
   const [loading,  setLoading] = useState(true);
   const [saving,   setSaving]  = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [formData, setFormData]= useState({
     name:     "",
     lastName: "",
@@ -76,6 +83,15 @@ const ProfilePage = () => {
     navigate("/");
   };
 
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    onOpen();
+  };
+
+  const tabLabels = ["Mis datos", "Mis pedidos", "Favoritos"];
+  const tabParam = new URLSearchParams(location.search).get("tab");
+  const defaultIndex = tabParam === "favoritos" ? 2 : 0;
+
   return (
     <Box ref={ref} py={{ base: 8, md: 16 }} px={{ base: 4, md: 8, lg: 16 }} minH="80vh">
       <Box maxW="860px" mx="auto">
@@ -108,7 +124,7 @@ const ProfilePage = () => {
           </Button>
         </HStack>
 
-        <Tabs variant="unstyled">
+        <Tabs variant="unstyled" defaultIndex={defaultIndex}>
           <TabList
             bg="brand.beige"
             borderRadius="full"
@@ -117,7 +133,7 @@ const ProfilePage = () => {
             w={{ base: "100%", sm: "auto" }}
             mb={8}
           >
-            {["Mis datos", "Mis pedidos"].map((label) => (
+            {tabLabels.map((label) => (
               <Tab
                 key={label}
                 flex={1}
@@ -256,9 +272,39 @@ const ProfilePage = () => {
                 </VStack>
               )}
             </TabPanel>
+
+            {/* Tab 3 — Favoritos */}
+            <TabPanel p={0}>
+              {favoritesLoading ? (
+                <Box py={12} display="flex" justifyContent="center">
+                  <Spinner size="md" color="brand.brown" thickness="1px" />
+                </Box>
+              ) : favoriteProducts.length === 0 ? (
+                <Box py={16} textAlign="center">
+                  <Text fontFamily="heading" fontWeight={300} fontSize="xl" color="brand.muted">
+                    Todavía no tenés favoritos
+                  </Text>
+                  <Button variant="outline" mt={4} onClick={() => navigate("/categoria/todos")}>Explorar tienda</Button>
+                </Box>
+              ) : (
+                <ProductGrid
+                  products={favoriteProducts}
+                  loading={false}
+                  onProductClick={handleProductClick}
+                />
+              )}
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
+
+      {selectedProduct && (
+        <ProductModalOptimized
+          product={selectedProduct}
+          isOpen={isOpen}
+          onClose={() => { onClose(); setSelectedProduct(null); }}
+        />
+      )}
     </Box>
   );
 };

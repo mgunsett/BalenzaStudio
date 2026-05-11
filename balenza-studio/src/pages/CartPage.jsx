@@ -1,17 +1,21 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   Box, Grid, GridItem, VStack, HStack, Text, Button, Divider, Flex, Image,
+  Select, Spinner, SimpleGrid,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ShoppingBag, ArrowLeft, Trash2 } from "lucide-react";
 import { useCart } from "../context/CartContext";
+import { useFavorites } from "../context/FavoritesContext";
 import CartItem from "../components/cart/CartItem";
 import { formatPrice } from "../utils/formatters";
 import { TRANSFER_DISCOUNT } from "../utils/constants";
 
 const CartPage = () => {
-  const { items, subtotal, clearCart } = useCart();
+  const { items, subtotal, clearCart, addItem } = useCart();
+  const { favoriteProducts, loading: favoritesLoading } = useFavorites();
+  const [favoriteSizes, setFavoriteSizes] = useState({});
   const navigate = useNavigate();
   const ref = useRef(null);
 
@@ -20,6 +24,13 @@ const CartPage = () => {
   }, []);
 
   const transferTotal = subtotal * (1 - TRANSFER_DISCOUNT);
+  const favoritePreview = favoriteProducts.slice(0, 4);
+  const hasMoreFavorites = favoriteProducts.length > 4;
+  const getAvailableSizes = (product) => (
+    Object.entries(product.sizes || {})
+      .filter(([, stock]) => stock > 0)
+      .map(([size]) => size)
+  );
 
   if (items.length === 0) {
     return (
@@ -87,6 +98,106 @@ const CartPage = () => {
             >
               Vaciar carrito
             </Button>
+
+            {(favoritesLoading || favoriteProducts.length > 0) && (
+              <Box mt={10}>
+                <VStack align="flex-start" spacing={1} mb={4}>
+                  <Text fontFamily="body" fontSize="2xs" letterSpacing="0.3em" textTransform="uppercase" color="brand.brown">
+                    Tus favoritos
+                  </Text>
+                  <Text fontFamily="body" fontSize="xs" color="brand.muted">
+                    Sumá un favorito al pedido en un clic
+                  </Text>
+                </VStack>
+
+                {favoritesLoading ? (
+                  <Box py={8} display="flex" justifyContent="center">
+                    <Spinner size="sm" color="brand.brown" thickness="1px" />
+                  </Box>
+                ) : (
+                  <>
+                    <SimpleGrid columns={{ base: 1, sm: 2 }} gap={4}>
+                      {favoritePreview.map((product) => {
+                      const availableSizes = getAvailableSizes(product);
+                      const image = product.images?.[0] || `https://placehold.co/300x400/EDE0D4/7A6555?text=${product.name}`;
+
+                      return (
+                        <Box
+                          key={product.id}
+                          bg="brand.cream"
+                          borderRadius="xl"
+                          border="0.5px solid rgba(160,120,90,0.15)"
+                          overflow="hidden"
+                        >
+                          <HStack align="stretch" spacing={0}>
+                            <Box w="90px" minW="90px" bg="brand.beige">
+                              <Image
+                                src={image}
+                                alt={product.name}
+                                w="100%"
+                                h="100%"
+                                objectFit="cover"
+                              />
+                            </Box>
+                            <VStack align="flex-start" spacing={2} p={3} flex={1}>
+                              <Text fontFamily="body" fontSize="sm" color="brand.dark" fontWeight={600} noOfLines={2}>
+                                {product.name}
+                              </Text>
+                              <Text fontFamily="body" fontSize="xs" color="brand.muted">
+                                {formatPrice(product.salePrice || product.price)}
+                              </Text>
+                              <HStack w="100%" spacing={2}>
+                                <Select
+                                  value={favoriteSizes[product.id] || ""}
+                                  onChange={(e) => setFavoriteSizes((prev) => ({
+                                    ...prev,
+                                    [product.id]: e.target.value,
+                                  }))}
+                                  placeholder={availableSizes.length ? "Talle" : "Sin stock"}
+                                  size="sm"
+                                  bg="brand.white"
+                                  border="0.5px solid rgba(160,120,90,0.3)"
+                                  borderRadius="sm"
+                                  fontFamily="body"
+                                  fontSize="xs"
+                                  color="brand.dark"
+                                  _focus={{ borderColor: "brand.brown", boxShadow: "none" }}
+                                >
+                                  {availableSizes.map((size) => (
+                                    <option key={size} value={size}>{size}</option>
+                                  ))}
+                                </Select>
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  borderColor="brand.brown"
+                                  color="brand.brown"
+                                  onClick={() => addItem(product, favoriteSizes[product.id], 1)}
+                                  isDisabled={!favoriteSizes[product.id] || availableSizes.length === 0}
+                                >
+                                  Agregar
+                                </Button>
+                              </HStack>
+                            </VStack>
+                          </HStack>
+                        </Box>
+                      );
+                      })}
+                    </SimpleGrid>
+                    {hasMoreFavorites && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        mt={4}
+                        onClick={() => navigate("/mi-cuenta?tab=favoritos")}
+                      >
+                        Ver favoritos
+                      </Button>
+                    )}
+                  </>
+                )}
+              </Box>
+            )}
           </GridItem>
 
           {/* Resumen */}
