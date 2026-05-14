@@ -140,8 +140,13 @@ const StockManager = () => {
       });
       toast.success("Movimiento registrado");
       setMovModal({ isOpen: false, product: null });
-    } catch {
-      toast.error("Error al registrar movimiento");
+    } catch (error) {
+      console.error("Error creando movimiento de stock:", error);
+      if (error?.code === "permission-denied") {
+        toast.error("No tenes permisos para registrar movimientos");
+      } else {
+        toast.error("Error al registrar movimiento");
+      }
     } finally {
       setMovSaving(false);
     }

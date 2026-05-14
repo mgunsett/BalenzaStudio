@@ -4,7 +4,7 @@
 // Usa: getAllOrders, updateOrderStatus
 // Estructura de orden: order.shipping.name, order.totals.total
 // ═══════════════════════════════════════════════════════════════
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Box, Text, Flex, Badge, Select, Input, HStack, VStack,
   Spinner, Divider, Image,
@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Search, ShoppingCart, RefreshCw } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getAllOrders, updateOrderStatus } from "../../services/firebase/orders";
 import { ORDER_STATUS } from "../../utils/constants";
 import { formatPrice, formatDate } from "../../utils/formatters";
@@ -169,9 +169,21 @@ const OrderList = () => {
   const [loading,      setLoading]      = useState(true);
   const [filterStatus, setFilterStatus] = useState("");
   const [search,       setSearch]       = useState("");
-  const [selected,     setSelected]     = useState(null);
+  const [selectedId,   setSelectedId]   = useState("");
   const [updating,     setUpdating]     = useState(false);
+  const location = useLocation();
   const { isOpen, onOpen, onClose }     = useDisclosure();
+
+  const focusedOrderId = useMemo(
+    () => new URLSearchParams(location.search).get("focus") || "",
+    [location.search]
+  );
+  const activeOrderId = selectedId || focusedOrderId;
+
+  const selected = useMemo(
+    () => orders.find((o) => o.id === activeOrderId) || null,
+    [orders, activeOrderId]
+  );
 
   const load = async () => {
     setLoading(true);
@@ -185,12 +197,17 @@ const OrderList = () => {
 
   useEffect(() => { load(); }, []);
 
+  useEffect(() => {
+    if (!focusedOrderId || !orders.length) return;
+    const exists = orders.some((o) => o.id === focusedOrderId);
+    if (exists && window.innerWidth < 1024) onOpen();
+  }, [focusedOrderId, orders, onOpen]);
+
   const handleStatusChange = async (orderId, newStatus) => {
     setUpdating(true);
     try {
       await updateOrderStatus(orderId, newStatus);
       setOrders((prev) => prev.map((o) => o.id === orderId ? { ...o, status: newStatus } : o));
-      setSelected((prev) => prev?.id === orderId ? { ...prev, status: newStatus } : prev);
       toast.success("Estado actualizado");
     } catch { toast.error("Error al actualizar"); }
     finally { setUpdating(false); }
@@ -207,7 +224,7 @@ const OrderList = () => {
   });
 
   const handleSelect = (order) => {
-    setSelected(order);
+    setSelectedId(order.id);
     if (window.innerWidth < 1024) onOpen();
   };
 
