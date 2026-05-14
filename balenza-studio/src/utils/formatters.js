@@ -9,7 +9,7 @@ export const formatDate = (timestamp) => {
   if (!timestamp) return "";
   const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
   return new Intl.DateTimeFormat("es-AR", {
-    day: "2-digit", month: "2-digit", year: "numeric",
+    day: "numeric", month: "short", year: "numeric",
   }).format(date);
 };
 

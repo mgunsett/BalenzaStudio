@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import {
   Box, Flex, VStack, Text, IconButton, Avatar,
   useDisclosure, Drawer, DrawerOverlay, DrawerContent,
-  DrawerCloseButton, DrawerBody, Divider, Badge, Tooltip, Image,
+  DrawerCloseButton, DrawerBody, Divider, Badge, Tooltip,
 } from "@chakra-ui/react";
 import { Outlet, useLocation, useNavigate, NavLink } from "react-router-dom";
 import {
-  LayoutDashboard, Package, ShoppingCart, BarChart2,
-  Layers, Menu as MenuIcon, LogOut, ExternalLink,
+  LayoutDashboard, Package, ShoppingCart, Layers, ListOrdered,
+  Menu as MenuIcon, LogOut, ExternalLink,
   ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -16,10 +16,11 @@ import { logoutUser } from "../../services/firebase/auth";
 
 // ── Rutas del panel ─────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { icon: LayoutDashboard, label: "Dashboard",  path: "/admin",           exact: true  },
-  { icon: Package,          label: "Productos",  path: "/admin/productos", exact: false },
-  { icon: ShoppingCart,     label: "Órdenes",    path: "/admin/ordenes",   exact: false },
-  { icon: Layers,           label: "Stock",      path: "/admin/stock",     exact: false },
+  { icon: LayoutDashboard, label: "Dashboard",    path: "/admin",              exact: true  },
+  { icon: Package,          label: "Productos",    path: "/admin/productos",    exact: false },
+  { icon: ShoppingCart,     label: "Órdenes",      path: "/admin/ordenes",      exact: false },
+  { icon: Layers,           label: "Stock",        path: "/admin/stock",        exact: false },
+  { icon: ListOrdered,      label: "Movimientos",  path: "/admin/movimientos",  exact: false },
 ];
 
 // ── Item de navegación ───────────────────────────────────────────────
@@ -92,6 +93,17 @@ const SidebarContent = ({ collapsed, onToggle, onClose, isMobile }) => {
   const { profile, user } = useAuth();
   const navigate = useNavigate();
 
+  const displayName = profile?.displayName || profile?.name
+    ? (profile.displayName || `${profile.name || ""} ${profile.lastName || ""}`.trim())
+    : user?.email || "Admin";
+
+  const roleLabel = profile?.role === "Propietario" ? "Propietario" : "Admin";
+
+  const handleLogout = async () => {
+    await logoutUser();
+    navigate("/");
+  };
+
   return (
     <Flex
       direction="column"
@@ -129,7 +141,7 @@ const SidebarContent = ({ collapsed, onToggle, onClose, isMobile }) => {
               color="brand.muted"
               mt="2px"
             >
-              Studio · Admin
+              Administración
             </Text>
           </VStack>
         )}
@@ -201,31 +213,48 @@ const SidebarContent = ({ collapsed, onToggle, onClose, isMobile }) => {
           <Flex align="center" gap={2.5} mb={2} px={1}>
             <Avatar
               size="sm"
-              name={profile ? `${profile.name} ${profile.lastName}` : user?.email}
+              name={displayName}
               bg="brand.sand"
               color="brand.dark"
               fontFamily="body"
               fontSize="xs"
             />
             <VStack align="flex-start" spacing={0} flex={1} overflow="hidden">
-              <Text fontFamily="body" fontSize="xs" fontWeight={500} color="brand.dark" noOfLines={1}>
-                {profile ? `${profile.name} ${profile.lastName}` : "Admin"}
+              <Text
+                fontFamily="body"
+                fontSize="xs"
+                fontWeight={500}
+                color="brand.dark"
+                noOfLines={1}
+              >
+                {displayName}
               </Text>
-              <Text fontFamily="body" fontSize="2xs" color="brand.muted">
-                Administrador
-              </Text>
+              <Badge
+                bg="brand.beige"
+                color="brand.brown"
+                fontSize="2xs"
+                fontFamily="body"
+                borderRadius="full"
+                px={2}
+                py={0}
+                letterSpacing="0.05em"
+              >
+                {roleLabel}
+              </Badge>
             </VStack>
           </Flex>
         )}
         {collapsed && (
           <Flex justify="center" mb={2}>
-            <Avatar
-              size="sm"
-              name={profile ? `${profile.name} ${profile.lastName}` : user?.email}
-              bg="brand.sand"
-              color="brand.dark"
-              fontSize="xs"
-            />
+            <Tooltip label={displayName} placement="right" hasArrow bg="brand.brown">
+              <Avatar
+                size="sm"
+                name={displayName}
+                bg="brand.sand"
+                color="brand.dark"
+                fontSize="xs"
+              />
+            </Tooltip>
           </Flex>
         )}
 
@@ -240,7 +269,7 @@ const SidebarContent = ({ collapsed, onToggle, onClose, isMobile }) => {
             color="brand.muted"
             _hover={{ bg: "rgba(192,57,43,0.07)", color: "brand.error", cursor: "pointer" }}
             transition="all 0.18s"
-            onClick={async () => { await logoutUser(); navigate("/"); }}
+            onClick={handleLogout}
           >
             <LogOut size={15} strokeWidth={1.5} />
             {!collapsed && (
@@ -318,10 +347,23 @@ const AdminLayout = () => {
             aria-label="Menú"
           />
           <VStack spacing={0} lineHeight={1}>
-            <Text fontFamily="heading" fontWeight={300} fontSize="lg" letterSpacing="0.12em" textTransform="uppercase" color="brand.dark">
+            <Text
+              fontFamily="heading"
+              fontWeight={300}
+              fontSize="lg"
+              letterSpacing="0.12em"
+              textTransform="uppercase"
+              color="brand.dark"
+            >
               Balenza
             </Text>
-            <Text fontFamily="body" fontSize="2xs" letterSpacing="0.25em" textTransform="uppercase" color="brand.muted">
+            <Text
+              fontFamily="body"
+              fontSize="2xs"
+              letterSpacing="0.25em"
+              textTransform="uppercase"
+              color="brand.muted"
+            >
               Studio
             </Text>
           </VStack>
@@ -330,7 +372,7 @@ const AdminLayout = () => {
 
         {/* Contenido de la página */}
         <Box flex={1} overflowY="auto" bg="brand.nude">
-          <Box p={{ base: 4, md: 6, lg: 8 }} maxW="1400px" mx="auto">
+          <Box px={{ base: 4, md: 6, lg: 8 }} py={8} maxW="1400px" mx="auto">
             <Outlet />
           </Box>
         </Box>

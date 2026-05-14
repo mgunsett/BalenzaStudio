@@ -32,7 +32,7 @@ const InfoRow = ({ label, value }) => (
 );
 
 const OrderDetail = () => {
-  const { id }      = useParams();   // ← "id" como en AdminPage
+  const { orderId: id } = useParams();
   const navigate    = useNavigate();
   const [order,     setOrder]     = useState(null);
   const [loading,   setLoading]   = useState(true);

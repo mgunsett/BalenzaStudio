@@ -1,5 +1,5 @@
 import {
-  collection, doc, getDocs, getDoc, addDoc, updateDoc,
+  collection, doc, getDocs, getDoc, addDoc, updateDoc, deleteDoc,
   query, where, orderBy, limit, serverTimestamp, documentId,
 } from "firebase/firestore";
 import { db } from "./config";
@@ -60,6 +60,9 @@ export const updateProduct = async (id, data) => {
 export const deleteProduct = async (id) => {
   return updateDoc(doc(db, PRODUCTS_COL, id), { active: false, updatedAt: serverTimestamp() });
 };
+
+/** hardDeleteProduct — elimina el documento definitivamente (sin recuperación) */
+export const hardDeleteProduct = async (id) => deleteDoc(doc(db, PRODUCTS_COL, id));
 
 export const getFeaturedProducts = () => getProducts({ featured: true, limit: 1 });
 

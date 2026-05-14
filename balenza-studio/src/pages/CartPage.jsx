@@ -169,9 +169,12 @@ const CartPage = () => {
                                 </Select>
                                 <Button
                                   size="sm"
-                                  variant="outline"
+                                  variant='outline'
                                   borderColor="brand.brown"
                                   color="brand.brown"
+                                  fontSize="xs"
+                                  p={4}
+                                  borderRadius="md"
                                   onClick={() => addItem(product, favoriteSizes[product.id], 1)}
                                   isDisabled={!favoriteSizes[product.id] || availableSizes.length === 0}
                                 >
