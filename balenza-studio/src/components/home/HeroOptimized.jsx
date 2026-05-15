@@ -90,18 +90,10 @@ const HeroOptimized = () => {
           objectPosition={{ base: "60% center", md: "center" }}
           opacity={{ base: 0.45, md: 0.7 }}
           pointerEvents="none"
-          filter={{ base: "blur(2px)", md: "none" }}
+          filter={{ base: "blur(5px)", md: "none" }}
         />
 
-        {/* Overlay gradiente para legibilidad en mobile */}
-        <Box
-          display={{ base: "block", md: "none" }}
-          position="absolute"
-          inset={0}
-          bgGradient="linear(to-b, rgba(245,239,230,0.55) 0%, rgba(237,224,212,0.75) 60%, rgba(237,224,212,0.92) 100%)"
-          zIndex={2}
-          pointerEvents="none"
-        />
+        
 
         {/* Elementos decorativos */}
         <Box
@@ -166,7 +158,7 @@ const HeroOptimized = () => {
                   px={4}
                   py={2}
                   borderRadius="full"
-                  fontSize={{ base: "xs", md: "sm" }}
+                  fontSize={{ base: "2xs", md: "sm" }}
                   fontWeight="600"
                   textTransform="uppercase"
                   letterSpacing="wider"
@@ -177,6 +169,7 @@ const HeroOptimized = () => {
                   🔥 Nuevos ingresos
                 </Badge>
                 <Text
+                  display={{ base: "none", md: "block" }}
                   fontSize={{ base: "xs", md: "sm" }}
                   color="brand.muted"
                   fontWeight="500"
@@ -186,11 +179,11 @@ const HeroOptimized = () => {
               </HStack>
 
               {/* TITULAR PRINCIPAL - MÁS VENDEDOR */}
-              <Box ref={titleRef}>
+              <Box ref={titleRef} >
                 <Text
                   as="h1"
                   fontFamily="heading"
-                  fontSize={{ base: "4xl", sm: "5xl", md: "6xl", lg: "7xl" }}
+                  fontSize={{ base: "42px", sm: "5xl", md: "6xl", lg: "7xl" }}
                   fontWeight="400"
                   color="brand.dark"
                   lineHeight={{ base: "1.15", md: "1.1" }}
@@ -202,6 +195,7 @@ const HeroOptimized = () => {
                     color="brand.brown"
                     position="relative"
                     display="inline-block"
+                    fontSize={{ base: "46px", sm: "5xl", md: "6xl", lg: "7xl" }}
                     _after={{
                       content: '""',
                       position: "absolute",
@@ -228,6 +222,7 @@ const HeroOptimized = () => {
                 color="brand.muted"
                 maxW={{ base: "100%", md: "550px" }}
                 lineHeight="1.6"
+                display={{ base: "none", md: "block" }}
               >
                 Prendas pensadas para vos. Comodidad, calidad y estilo que te
                 acompañan todos los días.
@@ -331,7 +326,7 @@ const HeroOptimized = () => {
             flexDir={{ base: "column", sm: "row" }}
           >
             <Text fontWeight="700" letterSpacing="wide">🎁 OFERTA ESPECIAL:</Text>
-            <Text textAlign="center">
+            <Text textAlign="center" >
               Abonando con transferencia ó efectivo{"  "}
               <Badge
                 bg="white"
@@ -342,6 +337,7 @@ const HeroOptimized = () => {
                 fontSize={{ base: "xs", md: "xs" }}
                 borderRadius="md"
                 ml={1}
+                mt={{ base: 3 , sm: 0 }}
               >
                 15% de descuento
               </Badge>

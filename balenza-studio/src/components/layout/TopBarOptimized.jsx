@@ -95,8 +95,7 @@ const TopBarOptimized = () => {
                 px={2}
                 py={0.5}
                 fontWeight="700"
-                fontSize="2xs"
-               
+                fontSize={{ base: "3xs", md: "xs" }}
               >
                 {currentMessage.highlight}
               </Badge>

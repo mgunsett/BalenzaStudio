@@ -94,7 +94,7 @@ const ProductCardOptimized = ({ product, onClick }) => {
         {/* IMAGEN PRINCIPAL CON SWAP */}
         <Box
           position="relative"
-          h={{ base: "280px", sm: "320px", md: "360px" }}
+          h={{ base: "250px", sm: "320px", md: "360px" }}
           bg="brand.beige"
           overflow="hidden"
         >
